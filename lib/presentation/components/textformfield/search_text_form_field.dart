@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/presentation/components/textformfield/app_text_form_field.dart';
 

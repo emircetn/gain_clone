@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_item_model.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_bar_item_widget.dart';
@@ -27,7 +27,7 @@ class AppBottomNavigationBar extends StatelessWidget {
           padding: context.paddingHorizontal16x + context.paddingBottom16x,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.grey[900],
+              color: ColorConstants.primaryColor,
               borderRadius: context.borderRadius32x,
             ),
             child: Row(

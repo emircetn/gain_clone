@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 
-class AppTabbar extends TabBar {
-  AppTabbar({
+class ContentPageTabbar extends TabBar {
+  ContentPageTabbar({
     Key? key,
     required final BuildContext context,
     final TabController? controller,
@@ -12,10 +12,11 @@ class AppTabbar extends TabBar {
           tabs: tabs.map((tab) => Tab(text: tab)).toList(),
           controller: controller,
           unselectedLabelColor: Colors.white54,
-          labelStyle: context.textTheme.bodyText1,
-          isScrollable: true,
+          labelStyle: context.textTheme.subtitle1!.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
           indicatorPadding: EdgeInsets.zero,
-          indicatorColor: Colors.transparent,
-          indicatorWeight: 0.01,
+          indicatorColor: Colors.red,
+          indicatorWeight: 2.sp,
         );
 }

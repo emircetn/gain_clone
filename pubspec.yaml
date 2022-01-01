@@ -23,6 +23,9 @@ dependencies:
 
   webview_flutter: ^3.0.0
 
+  modal_bottom_sheet: ^2.0.0
+
+
 
 
 dev_dependencies:

@@ -2,14 +2,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/models/content.dart';
-import 'package:gain_clone/presentation/components/buttons/watch_now_button.dart';
-import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
+import 'package:gain_clone/presentation/components/other/big_recommended_content_item.dart';
 
 class RecommendedContentsSlider extends StatefulWidget {
   final List<Content> contents;
+  final void Function(int) onTapCallBack;
   const RecommendedContentsSlider({
     Key? key,
     required this.contents,
+    required this.onTapCallBack,
   }) : super(key: key);
 
   @override
@@ -26,16 +27,19 @@ class _RecommendedContentsSliderState extends State<RecommendedContentsSlider> {
         CarouselSlider.builder(
           options: CarouselOptions(
             onPageChanged: (index, reason) => pageIndexNotifier.value = index,
-            height: context.height * .5,
+            height: context.height * .6,
             viewportFraction: 1,
           ),
           itemCount: widget.contents.length,
           itemBuilder: (context, index, c) {
-            return _RecommendedContentsSliderItem(
-                content: widget.contents[index]);
+            return BigecommendedContentItem(
+              content: widget.contents[index],
+              onTap: () => widget.onTapCallBack(index),
+              height: context.height * .6,
+            );
           },
         ),
-        SizedBox(height: 12.sp),
+        SizedBox(height: 8.sp),
         ValueListenableBuilder<int>(
           valueListenable: pageIndexNotifier,
           builder: (context, pageIndex, _) {
@@ -46,67 +50,6 @@ class _RecommendedContentsSliderState extends State<RecommendedContentsSlider> {
           },
         ),
         SizedBox(height: 12.sp),
-      ],
-    );
-  }
-}
-
-class _RecommendedContentsSliderItem extends StatelessWidget {
-  final Content content;
-  const _RecommendedContentsSliderItem({
-    Key? key,
-    required this.content,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        NetworkImageWithShimmer(content.coverImageUrl,
-            height: context.height * .5),
-        Container(
-          decoration: const BoxDecoration(
-            //  border: Border.all(color: Colors.red),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.transparent,
-                Colors.transparent,
-                Colors.transparent,
-                Colors.transparent,
-                Colors.black12,
-                Colors.black38,
-                Colors.black54,
-                Colors.black87,
-                Colors.black,
-                Colors.black,
-              ],
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                content.name,
-                style: context.textTheme.bodyText1,
-              ),
-              SizedBox(height: 8.sp),
-              Text(
-                content.showContentType(),
-                style: context.textTheme.caption,
-              ),
-              SizedBox(height: 8.sp),
-              WatchNowButton(
-                onTap: () {},
-              ),
-              SizedBox(height: 8.sp),
-            ],
-          ),
-        )
       ],
     );
   }
@@ -126,7 +69,7 @@ class _PageIndicatorWidget extends StatefulWidget {
     required this.index,
     this.color = Colors.white,
     this.selectedColor = Colors.red,
-    this.dotHeight = 1.5,
+    this.dotHeight = 2,
     this.dotWidth = 12,
   }) : super(key: key);
 

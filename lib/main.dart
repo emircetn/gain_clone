@@ -25,10 +25,10 @@ class App extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'BeVietnamPro',
           primaryColor: ColorConstants.primaryColor,
-          scaffoldBackgroundColor: Colors.black,
+          scaffoldBackgroundColor: ColorConstants.primaryColor,
           textTheme: const TextTheme(
-            headline6: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w600, fontSize: 17),
+            headline5: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
+            headline6: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
             subtitle1: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
             subtitle2: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
             bodyText1: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),

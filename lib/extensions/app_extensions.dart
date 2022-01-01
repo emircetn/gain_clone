@@ -22,6 +22,13 @@ extension BorderRadiusExtensionAll on BuildContext {
       BorderRadius.circular(ScreenUtil().setSp(32));
 }
 
+extension BorderRadiusExtensionOnlyBottom on BuildContext {
+  BorderRadius get borderRadiusOnlyBottom8x => BorderRadius.only(
+        bottomLeft: Radius.circular(ScreenUtil().setSp(8)),
+        bottomRight: Radius.circular(ScreenUtil().setSp(8)),
+      );
+}
+
 extension PaddingExtensionAll on BuildContext {
   EdgeInsets get padding1x => EdgeInsets.all(ScreenUtil().setSp(1));
   EdgeInsets get padding2x => EdgeInsets.all(ScreenUtil().setSp(2));
