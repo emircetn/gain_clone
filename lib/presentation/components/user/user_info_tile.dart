@@ -7,8 +7,10 @@ class UserInfoTile extends ListTile {
     required BuildContext context,
     required final String header,
     required final String text,
+    final VoidCallback? onTap,
   }) : super(
           key: key,
+          onTap: onTap,
           contentPadding: EdgeInsets.zero,
           visualDensity: VisualDensity.compact,
           title: Text(

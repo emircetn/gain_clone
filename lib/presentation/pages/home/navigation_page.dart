@@ -9,6 +9,8 @@ import 'package:gain_clone/presentation/pages/home/profile_page.dart';
 import 'package:gain_clone/presentation/pages/home/search_page.dart';
 
 class NavigationPage extends StatefulWidget {
+  static const String path = '/navigation';
+
   const NavigationPage({Key? key}) : super(key: key);
 
   @override

@@ -14,7 +14,9 @@ class SearchPage extends StatelessWidget {
           padding: context.paddingHorizontal16x,
           children: [
             SizedBox(height: 12.sp),
-            const SearchTextFormField(),
+            SearchTextFormField(
+              context: context,
+            ),
           ],
         ),
       ),

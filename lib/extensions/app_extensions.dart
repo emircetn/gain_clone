@@ -16,6 +16,8 @@ extension BorderRadiusExtensionAll on BuildContext {
       BorderRadius.circular(ScreenUtil().setSp(12));
   BorderRadius get borderRadius16x =>
       BorderRadius.circular(ScreenUtil().setSp(16));
+  BorderRadius get borderRadius24x =>
+      BorderRadius.circular(ScreenUtil().setSp(24));
   BorderRadius get borderRadius32x =>
       BorderRadius.circular(ScreenUtil().setSp(32));
 }

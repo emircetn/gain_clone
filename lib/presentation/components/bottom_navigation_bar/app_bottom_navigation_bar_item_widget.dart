@@ -16,12 +16,12 @@ class AppBottomNavigationBarItemWidget extends Material {
             message: text,
             textStyle: context.textTheme.caption!.copyWith(
               fontSize: 9.sp,
-              color: Colors.white,
+              color: Colors.black,
             ),
             child: IconButton(
-              splashRadius: 30.sp,
+              splashRadius: 32.sp,
               padding: context.padding8x,
-              iconSize: 20.sp,
+              iconSize: 35.sp,
               onPressed: onTap,
               icon: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

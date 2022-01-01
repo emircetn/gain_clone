@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
+import 'package:gain_clone/init/navigation/navigation_route.dart';
+import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  static const String path = '/';
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,8 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        navigatorKey: NavigationService.navigatorKey,
+        onGenerateRoute: NavigationRoute.generateRoute,
         theme: ThemeData(
           fontFamily: 'BeVietnamPro',
           primaryColor: ColorConstants.primaryColor,
@@ -41,11 +46,14 @@ class MyApp extends StatelessWidget {
             trackColor: MaterialStateProperty.all(Colors.greenAccent[400]),
           ),
           appBarTheme: AppBarTheme(
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+            ),
             backgroundColor: ColorConstants.primaryColor,
             elevation: 0,
             centerTitle: false,
-            titleTextStyle:
-                context.textTheme.bodyText1!.copyWith(color: Colors.white),
+            titleTextStyle: context.textTheme.bodyText1!
+                .copyWith(color: Colors.white, fontSize: 16),
             toolbarHeight: kToolbarHeight * 0.8,
           ),
         ),

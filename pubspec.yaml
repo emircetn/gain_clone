@@ -21,6 +21,8 @@ dependencies:
 
   flutter_screenutil: ^5.0.0+2
 
+  webview_flutter: ^3.0.0
+
 
 
 dev_dependencies:

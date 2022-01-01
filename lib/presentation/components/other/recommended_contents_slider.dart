@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/models/content.dart';
 import 'package:gain_clone/presentation/components/buttons/watch_now_button.dart';
-import 'package:gain_clone/presentation/components/network_image_with_shimmer.dart';
+import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 
 class RecommendedContentsSlider extends StatefulWidget {
   final List<Content> contents;
