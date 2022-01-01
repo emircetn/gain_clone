@@ -1,0 +1,95 @@
+name: gain_clone
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_phosphor_icons: ^0.0.1+6
+
+  carousel_slider: ^4.0.0
+  cached_network_image: ^3.1.0
+  shimmer: ^2.0.0
+
+  flutter_screenutil: ^5.0.0+2
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^1.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  fonts:
+    - family: BeVietnamPro
+      fonts:
+        - asset: assets/fonts/BeVietnamPro-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/BeVietnamPro-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/BeVietnamPro-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-Light.ttf
+          weight: 300
+        - asset: assets/fonts/BeVietnamPro-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/BeVietnamPro-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/BeVietnamPro-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/BeVietnamPro-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/BeVietnamPro-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/BeVietnamPro-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/BeVietnamPro-Black.ttf
+          weight: 900
+        - asset: assets/fonts/BeVietnamPro-BlackItalic.ttf
+          weight: 900
+          style: italic
