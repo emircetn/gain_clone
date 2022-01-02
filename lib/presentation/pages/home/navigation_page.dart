@@ -3,10 +3,10 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_item_model.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_bar.dart';
 import 'package:gain_clone/presentation/components/other/keep_alive_page.dart';
-import 'package:gain_clone/presentation/pages/home/downloads_page.dart';
-import 'package:gain_clone/presentation/pages/home/main_page.dart';
-import 'package:gain_clone/presentation/pages/home/profile_page.dart';
-import 'package:gain_clone/presentation/pages/home/search_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/downloads_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/main_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/profile_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/search_page.dart';
 
 class NavigationPage extends StatefulWidget {
   static const String path = '/navigation';

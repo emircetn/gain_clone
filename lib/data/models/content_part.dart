@@ -1,19 +1,24 @@
+import 'package:gain_clone/data/models/content.dart';
+
 class ContentPart {
-  final int number;
+  final int id;
+  final String? name;
   final String coverUrl;
   final String videoUrl;
   final String explanation;
 
   ContentPart({
-    required this.number,
+    this.name,
+    required this.id,
     required this.coverUrl,
     required this.videoUrl,
     required this.explanation,
   });
 
-  factory ContentPart.temp(int index) {
+  factory ContentPart.temp() {
     return ContentPart(
-      number: index,
+      name: 'Özel',
+      id: 3,
       coverUrl: 'https://assets-jpcust.jwpsrv.com/thumbnails/f2ffc680-640.jpg',
       videoUrl: '',
       explanation:

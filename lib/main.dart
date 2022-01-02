@@ -49,7 +49,7 @@ class App extends StatelessWidget {
             iconTheme: const IconThemeData(
               color: Colors.white,
             ),
-            backgroundColor: ColorConstants.primaryColor,
+            backgroundColor: ColorConstants.secondaryColor,
             elevation: 0,
             centerTitle: false,
             titleTextStyle: context.textTheme.bodyText1!

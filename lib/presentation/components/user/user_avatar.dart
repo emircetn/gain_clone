@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
-import 'package:gain_clone/models/user.dart';
+import 'package:gain_clone/data/models/user.dart';
 
 //TODO:Fotoğraf ekleyebilme özelliği eklenecek
 class UserAvatar extends StatelessWidget {
@@ -14,7 +14,7 @@ class UserAvatar extends StatelessWidget {
       child: Stack(
         children: [
           CircleAvatar(
-            backgroundColor: ColorConstants.primaryColor,
+            backgroundColor: ColorConstants.secondaryColor,
             radius: 30.sp,
             child: Text(
               user.shortNameAndSurname,

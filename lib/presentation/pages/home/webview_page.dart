@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gain_clone/models/arguments/web_view_page_arguments.dart';
+import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
 import 'package:gain_clone/presentation/components/buttons/appbar_leading_button.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:webview_flutter/webview_flutter.dart';

@@ -1,4 +1,4 @@
-import 'package:gain_clone/models/content_part.dart';
+import 'package:gain_clone/data/models/content_part.dart';
 
 enum ContentType {
   series,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
-import 'package:gain_clone/models/arguments/user_information_update_page_arguments.dart';
-import 'package:gain_clone/models/arguments/web_view_page_arguments.dart';
-import 'package:gain_clone/models/user.dart';
+import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
+import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
+import 'package:gain_clone/data/models/user.dart';
 import 'package:gain_clone/presentation/components/divider/app_divider.dart';
 import 'package:gain_clone/presentation/components/list_tile/app_list_tile.dart';
 import 'package:gain_clone/presentation/components/user/user_avatar.dart';

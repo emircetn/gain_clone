@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/color_constants.dart';
+import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
+import 'package:gain_clone/data/models/content.dart';
+import 'package:gain_clone/data/models/content_part.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
-import 'package:gain_clone/models/content.dart';
-import 'package:gain_clone/models/content_part.dart';
+
 import 'package:gain_clone/presentation/components/buttons/circle_icon_button.dart';
 import 'package:gain_clone/presentation/components/buttons/watch_now_button.dart';
 import 'package:gain_clone/presentation/components/divider/app_divider.dart';
 import 'package:gain_clone/presentation/components/items/content_part_item.dart';
-import 'package:gain_clone/presentation/components/other/big_recommended_content_item.dart';
 import 'package:gain_clone/presentation/components/other/dot.dart';
 import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 import 'package:gain_clone/presentation/components/other/smart_sign.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_page_tabbar.dart';
+import 'package:gain_clone/presentation/pages/home/player_page.dart';
 
 class ContentPage extends StatefulWidget {
   final Content content;
@@ -74,7 +76,7 @@ class _ContentPageState extends State<ContentPage>
                   itemBuilder: (context, index) {
                     return ContentPartItem(
                       contentName: widget.content.name,
-                      contentPart: ContentPart.temp(index),
+                      contentPart: ContentPart.temp(),
                     );
                   },
                 )
@@ -173,8 +175,17 @@ class _ContentPageState extends State<ContentPage>
         ],
       ),
       SizedBox(height: 24.sp),
-
-      WatchNowButton(onPressed: () {}), //TODO:yönlendirme eklenecek
+      WatchNowButton(
+        onPressed: () {
+          NavigationService.pushNamed(
+            PlayerPage.path,
+            arguments: PlayerPageArguments(
+              content: Content.temp(),
+              contentPart: ContentPart.temp(),
+            ),
+          );
+        },
+      ), //TODO:yönlendirme eklenecek
       SizedBox(height: 20.sp),
       Text(
         widget.content.explanation,

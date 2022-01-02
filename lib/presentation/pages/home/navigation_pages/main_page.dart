@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:gain_clone/constants/app_constants.dart';
+import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
-import 'package:gain_clone/models/content.dart';
 import 'package:gain_clone/presentation/components/other/content_type_horizontal_list.dart';
 import 'package:gain_clone/presentation/components/other/recommended_contents_slider.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_types_tabbar.dart';

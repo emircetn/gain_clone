@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
-import 'package:gain_clone/models/content.dart';
+import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/presentation/components/buttons/mini_watch_now_button.dart';
 import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 

@@ -34,7 +34,7 @@ class AppTextFormField extends TextFormField {
               color: Colors.white54,
             ),
             filled: true,
-            fillColor: ColorConstants.primaryColor,
+            fillColor: ColorConstants.secondaryColor,
             border: OutlineInputBorder(
               borderRadius: context.borderRadius24x,
             ),

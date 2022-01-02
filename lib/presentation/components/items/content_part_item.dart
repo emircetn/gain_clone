@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
-import 'package:gain_clone/models/content_part.dart';
+import 'package:gain_clone/data/models/content_part.dart';
 import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 
 class ContentPartItem extends StatelessWidget {
@@ -37,7 +36,7 @@ class ContentPartItem extends StatelessWidget {
                 ),
                 width: context.width * 0.3,
                 child: Text(
-                  'Bölüm ${contentPart.number}',
+                  'Bölüm ${contentPart.id}',
                   style: context.textTheme.caption,
                   textAlign: TextAlign.center,
                 ),
@@ -47,7 +46,8 @@ class ContentPartItem extends StatelessWidget {
         ),
       ),
       title: Text(
-        '$contentName - ${contentPart.number}.bölüm',
+        (contentPart.name != null ? '${contentPart.name} - ' : '') +
+            '$contentName - ${contentPart.id}.bölüm',
         style: context.textTheme.subtitle2!,
       ),
       subtitle: Text(
