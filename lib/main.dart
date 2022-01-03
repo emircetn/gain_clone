@@ -5,6 +5,7 @@ import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_route.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
+import 'package:gain_clone/managers/app_manager.dart';
 import 'package:gain_clone/managers/user_manager.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_page.dart';
 import 'package:device_preview/device_preview.dart';
@@ -32,6 +33,10 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserManager>(
           create: (_) => UserManager(),
+        ),
+        ChangeNotifierProvider<AppManager>(
+          create: (_) => AppManager(),
+          lazy: false,
         ),
       ],
       child: ScreenUtilInit(
@@ -64,10 +69,6 @@ class App extends StatelessWidget {
                 brightness: Brightness.dark,
                 primary: ColorConstants.primaryColor,
                 secondary: ColorConstants.secondaryColor,
-              ),
-              switchTheme: SwitchThemeData(
-                thumbColor: MaterialStateProperty.all(Colors.green[800]),
-                trackColor: MaterialStateProperty.all(Colors.greenAccent[400]),
               ),
               appBarTheme: AppBarTheme(
                 iconTheme: const IconThemeData(

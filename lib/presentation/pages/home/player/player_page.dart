@@ -70,10 +70,15 @@ class PlayerPage extends StatelessWidget {
 
   Widget _videoField(BuildContext context, int contentPartIndex) {
     final playerViewModel = Provider.of<PlayerViewModel>(context, listen: true);
-    VideoPlayerController? videoPlayerController = isEven(
+    final videoPlayerController = isEven(
             contentPartIndex) //secili bölümün indexi çift ise videoPlayerController1 değil ise videoPlayerController2 oynatıyor
         ? playerViewModel.videoPlayerController1
         : playerViewModel.videoPlayerController2;
+
+    final isInitializeWaiting = isEven(contentPartIndex)
+        ? playerViewModel.isInitializeWaiting1
+        : playerViewModel.isInitializeWaiting2;
+
     return SafeArea(
       child: Center(
         child: AspectRatio(
@@ -82,8 +87,8 @@ class PlayerPage extends StatelessWidget {
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 200),
             child: videoPlayerController == null ||
-                    playerViewModel
-                        .isInitializeWaiting //videoPlayerController null ise veya initialize işlemi bitmediyse video kapğı gösterilir
+                    isInitializeWaiting ==
+                        true //videoPlayerController null ise veya initialize işlemi bitmediyse video kapğı gösterilir
                 ? CachedNetworkImage(
                     imageUrl: args.content.partList![contentPartIndex].coverUrl,
                     fit: BoxFit.cover,
@@ -170,8 +175,9 @@ class PlayerPage extends StatelessWidget {
     return Consumer<PlayerViewModel>(
       //PlayerViewModel dinleniyor
       builder: (context, playerViewModel, _) {
-        return playerViewModel
-                .isInitializeWaiting //initailize edilmediyse gösterme
+        return playerViewModel.isInitializeWaiting1 == true ||
+                playerViewModel.isInitializeWaiting2 ==
+                    true //initailize edilmediyse gösterme
             ? const SizedBox()
             : GestureDetector(
                 onTap: playerViewModel.playOrPauseVideo,
@@ -234,19 +240,23 @@ class PlayerPage extends StatelessWidget {
       height: 30,
       child: Consumer<PlayerViewModel>(
         builder: (context, playerViewModel, _) {
-          VideoPlayerController?
-              videoPlayerController = //hangi videoPlayerController olduğu belirleniyor
+          final videoPlayerController = //hangi videoPlayerController olduğu belirleniyor
               isEven(contentPartIndex)
                   ? playerViewModel.videoPlayerController1
                   : playerViewModel.videoPlayerController2;
+
+          final isInitializeWaiting = isEven(contentPartIndex)
+              ? playerViewModel.isInitializeWaiting1
+              : playerViewModel.isInitializeWaiting2;
+
           return videoPlayerController ==
                   null //henüz videoPlayerController null ise slider yerine loading bar gösteriliyor
               ? const Center(child: AppLinearProgressIndicator())
               : ValueListenableBuilder<VideoPlayerValue>(
                   valueListenable: videoPlayerController,
                   builder: (context, videoPlayerValue, _) {
-                    return playerViewModel
-                            .isInitializeWaiting //henüz videoPlayerController inialize edilmediyse slider yerine loading bar gösteriliyor
+                    return isInitializeWaiting ==
+                            true //henüz videoPlayerController inialize edilmediyse slider yerine loading bar gösteriliyor
                         ? const Center(child: AppLinearProgressIndicator())
                         : PlayerSlider(
                             currentDuration: videoPlayerValue.position,

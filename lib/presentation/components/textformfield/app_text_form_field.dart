@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 
@@ -17,11 +18,13 @@ class AppTextFormField extends TextFormField {
     final String? hintText,
     final Color? cursorColor,
     final TextInputAction? textInputAction,
+    final List<TextInputFormatter>? inputFormatters,
   }) : super(
           key: key,
           controller: controller,
           initialValue: initialValue,
           focusNode: focusNode,
+          inputFormatters: inputFormatters,
           textInputAction: textInputAction ?? TextInputAction.done,
           cursorColor: cursorColor ?? Colors.white,
           maxLines: 1,

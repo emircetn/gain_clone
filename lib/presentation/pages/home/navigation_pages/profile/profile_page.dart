@@ -3,7 +3,9 @@ import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
 import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
+import 'package:gain_clone/managers/app_manager.dart';
 import 'package:gain_clone/managers/user_manager.dart';
+import 'package:gain_clone/presentation/components/alertS/app_alert.dart';
 import 'package:gain_clone/presentation/components/divider/app_divider.dart';
 import 'package:gain_clone/presentation/components/list_tile/app_list_tile.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/profile/profile_view_model.dart';
@@ -12,6 +14,7 @@ import 'package:gain_clone/presentation/components/user/user_info_tile.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page.dart';
 import 'package:gain_clone/presentation/pages/home/webview_page.dart';
 import 'package:gain_clone/utils/app_validators.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -37,13 +40,16 @@ class ProfilePage extends StatelessWidget {
     NavigationService.pushNamed(
       UserInformationUpdatePage.path,
       arguments: UserInformationUpdatePageArguments(
-        text: 'Doğum tarihini güncelle',
-        initialValue: brithday,
-        validatorFunction: (newBrithday, lastBrithday) =>
-            AppValidators.instance.brithdayCheck(newBrithday, lastBrithday),
-        buttonCallBack: (newValue) =>
-            context.read<ProfileViewModel>().updateBrithday(context, newValue),
-      ),
+          text: 'Doğum tarihini güncelle',
+          initialValue: brithday,
+          validatorFunction: (newBrithday, lastBrithday) =>
+              AppValidators.instance.brithdayCheck(newBrithday, lastBrithday),
+          buttonCallBack: (newValue) => context
+              .read<ProfileViewModel>()
+              .updateBrithday(context, newValue),
+          inputFormatters: [
+            MaskTextInputFormatter(mask: "##/##/####"),
+          ]),
     );
   }
 
@@ -132,7 +138,8 @@ class ProfilePage extends StatelessWidget {
             context: context,
             header: 'Doğum Tarihi',
             text: userManager.user!.showBrithday,
-            onTap: () => updateBirtday(context, userManager.user!.showBrithday),
+            onTap: () =>
+                updateBirtday(context, userManager.user!.brithdayWithFormat),
           ),
         ],
       ),
@@ -181,9 +188,18 @@ class ProfilePage extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
-        trailing: Switch(
-          value: true,
-          onChanged: (value) {}, //TODO:swich ayarlanacak
+        trailing: Consumer<UserManager>(
+          builder: (context, userManager, _) {
+            return Switch(
+              activeColor: Colors.greenAccent[400],
+              value: userManager.user!.isHaveEMessagePermission ?? false,
+              onChanged: (value) =>
+                  context.read<ProfileViewModel>().changeEMessagePermission(
+                        context,
+                        value,
+                      ),
+            );
+          },
         ),
       ),
     ];
@@ -203,9 +219,18 @@ class ProfilePage extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
-        trailing: Switch(
-          value: true,
-          onChanged: (value) {}, //TODO:swich ayarlanacak
+        trailing: Consumer<UserManager>(
+          builder: (context, userManager, _) {
+            return Switch(
+              activeColor: Colors.greenAccent[400],
+              value: userManager.user!.isOpenDataSavingMode ?? false,
+              onChanged: (value) =>
+                  context.read<ProfileViewModel>().changeIsOpenDataSavingMode(
+                        context,
+                        value,
+                      ),
+            );
+          },
         ),
       ),
       AppDivider(),
@@ -271,7 +296,15 @@ class ProfilePage extends StatelessWidget {
       ),
       SizedBox(height: 8.sp),
       AppListTile(
-        onTap: () {}, //TODO: Üyelik  İptali Hakkında sayfasını açacak
+        onTap: () {
+          const AppAlert(
+            titleText: 'Üyelik İptali Hakkında',
+            contentText:
+                'Gain Aboneliğinizi iptal etmek için PlayStore -> Abonelikler bölümüne giderek GAİN...',
+            nextText: 'Anladım',
+            cancelText: 'Geri Dön',
+          ).show(context);
+        },
         leading: Text(
           'Üyelik İptali Hakkında',
           style: context.textTheme.caption!.copyWith(
@@ -282,7 +315,7 @@ class ProfilePage extends StatelessWidget {
       ),
       SizedBox(height: 16.sp),
       Text(
-        'v3.0.0(149)', //TODO:gerçek sürüm çekilecek
+        context.read<AppManager>().appVersion ?? '',
         style: context.textTheme.caption!.copyWith(
           fontWeight: FontWeight.w400,
           color: Colors.white38,
@@ -292,18 +325,3 @@ class ProfilePage extends StatelessWidget {
     ];
   }
 }
-/*   final String _profileText = 'Profil';
-  final String _nameAndSurnameText = 'Ad Soyad';
-  final String _emailText = 'Email';
-  final String _birtdayText = 'Doğum Tarihi';
-  final String _myListsText = 'Listelerim';
-  final String _passwordText = 'Şifre';
-  final String _editText = 'Düzenle';
-  final String _notificationSettingsText = 'Bildirim Ayarları';
-  final String _eMessagePermisionText = 'Elektronik ileti izinleri';
-  final String _generalSettingsAndSupportText = 'Genel Ayarlar ve destek';
-  final String _dataSavingModeText = 'Veri Tasarrufu Modu';
-  final String _kvkkAndPrivacyText = 'KVKK ve Gizlilik Sözleşmesi';
-  final String _supportText = 'Destek';
-  final String _faqText = 'Sıkça Sorulan Sorular';
- *///TODO:silinecek

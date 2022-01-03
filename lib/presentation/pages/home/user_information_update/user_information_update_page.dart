@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
 import 'package:gain_clone/presentation/components/buttons/app_async_button.dart';
 import 'package:gain_clone/presentation/components/buttons/appbar_leading_button.dart';
 import 'package:gain_clone/presentation/components/textformfield/app_text_form_field.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_view_model.dart';
+import 'package:gain_clone/utils/app_validators.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class UserInformationUpdatePage extends StatelessWidget {
@@ -41,6 +44,7 @@ class UserInformationUpdatePage extends StatelessWidget {
                       controller:
                           userInformationUpdateViewModel.textEditingController,
                       context: context,
+                      inputFormatters: args.inputFormatters,
                       validator: (newValue) => args.validatorFunction(newValue,
                           userInformationUpdateViewModel.currentValue),
                       onFieldSubmitted: (s) => context

@@ -12,7 +12,9 @@ class PlayerViewModel extends ChangeNotifier {
   late int _currentPartIndex;
 
   bool isPlaying = false;
-  bool isInitializeWaiting = true;
+  bool? isInitializeWaiting1;
+  bool? isInitializeWaiting2;
+
   bool isContentDetailsAndButtonsFieldShow = false;
 
   final PlayerPageArguments args;
@@ -36,11 +38,10 @@ class PlayerViewModel extends ChangeNotifier {
   }
 
   void initAndListenTheVideo(int index) async {
-    isInitializeWaiting = true;
-    notifyListeners();
-    await Future.delayed(const Duration(milliseconds: 500));
-
     if (isEven(index)) {
+      isInitializeWaiting1 = true;
+      notifyListeners();
+      await Future.delayed(const Duration(milliseconds: 500));
       //index çift ise video videoPlayerController1'e tek ise videoPlayerController2'ye atanır
       videoPlayerController2?.pause();
       videoPlayerController1 = VideoPlayerController.network(
@@ -56,7 +57,7 @@ class PlayerViewModel extends ChangeNotifier {
             await videoPlayerController1!.play();
 
             isPlaying = true;
-            isInitializeWaiting = false;
+            isInitializeWaiting1 = false;
             notifyListeners();
             videoPlayerController1!.addListener(() {
               // video bittiğinde isPlaying'e false atanıp ekran güncelleniyor
@@ -70,6 +71,9 @@ class PlayerViewModel extends ChangeNotifier {
           },
         );
     } else {
+      isInitializeWaiting2 = true;
+      notifyListeners();
+      await Future.delayed(const Duration(milliseconds: 500));
       videoPlayerController1?.pause();
       videoPlayerController2 = VideoPlayerController.network(
         args.content.partList![index].videoUrl,
@@ -82,7 +86,7 @@ class PlayerViewModel extends ChangeNotifier {
             await videoPlayerController2!.play();
 
             isPlaying = true;
-            isInitializeWaiting = false;
+            isInitializeWaiting2 = false;
             notifyListeners();
             videoPlayerController2!.addListener(() {
               final vdeoPlayerValue = videoPlayerController2!.value;

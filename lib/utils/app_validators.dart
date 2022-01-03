@@ -23,11 +23,14 @@ class AppValidators {
     }
   }
 
+  RegExp get birtdayRegExp =>
+      RegExp((r'^((0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/[12]\d{3})'));
+
   String? brithdayCheck(String? birthday, String? lastBirthday) {
-    //TODO:güncellenecek
-    if (birthday == null ||
-        birthday.length < appConstants.minimumUserNameCount) {
-      return 'Kullanıcı adı bu kadar kısa olamaz';
+    if (birthday == null || !birtdayRegExp.hasMatch(birthday)) {
+      return 'Lütfen geçerli bir doğum tarihi giriniz';
+    } else if (birthday == lastBirthday) {
+      return 'Doğum tarihi  öncekiyle aynı';
     } else {
       return null;
     }

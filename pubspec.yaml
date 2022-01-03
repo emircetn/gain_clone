@@ -34,6 +34,8 @@ dependencies:
   
   #general utils
   intl: ^0.17.0
+  mask_text_input_formatter: ^2.0.0
+  package_info: ^2.0.2
 
 dev_dependencies:
   flutter_test:

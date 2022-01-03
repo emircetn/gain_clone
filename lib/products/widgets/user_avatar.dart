@@ -10,35 +10,37 @@ class UserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserManager>(builder: (context, userManager, _) {
-      return Center(
-        child: Stack(
-          children: [
-            CircleAvatar(
-              backgroundColor: ColorConstants.secondaryColor,
-              radius: 30.sp,
-              child: Text(
-                userManager.user!.shortNameAndSurname,
-                style: context.textTheme.headline6,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.add,
-                  size: 20.sp,
+    return Consumer<UserManager>(
+      builder: (context, userManager, _) {
+        return Center(
+          child: Stack(
+            children: [
+              CircleAvatar(
+                backgroundColor: ColorConstants.secondaryColor,
+                radius: 30.sp,
+                child: Text(
+                  userManager.user!.shortNameAndSurname,
+                  style: context.textTheme.headline6,
                 ),
               ),
-            )
-          ],
-        ),
-      );
-    });
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    size: 20.sp,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 }
