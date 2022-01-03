@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gain_clone">
+    package="com.emircetn.gain_clone">
    <application
         android:label="gain_clone"
         android:name="${applicationName}"

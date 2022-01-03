@@ -7,8 +7,8 @@ import 'package:gain_clone/init/navigation/navigation_route.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/managers/app_manager.dart';
 import 'package:gain_clone/managers/user_manager.dart';
-import 'package:gain_clone/presentation/pages/home/navigation_page.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:gain_clone/presentation/pages/landing_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -83,7 +83,7 @@ class App extends StatelessWidget {
                 systemOverlayStyle: SystemUiOverlayStyle.light,
               ),
             ),
-            home: const NavigationPage(),
+            home: const LandingPage(),
           );
         },
       ),
