@@ -6,7 +6,7 @@ import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
 
 import 'package:gain_clone/presentation/pages/home/navigation_page.dart';
-import 'package:gain_clone/presentation/pages/home/player_page.dart';
+import 'package:gain_clone/presentation/pages/home/player/player_page.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update.dart';
 import 'package:gain_clone/presentation/pages/home/webview_page.dart';
 import 'package:gain_clone/presentation/pages/landing_page.dart';
@@ -38,6 +38,7 @@ class NavigationRoute {
         );
       case PlayerPage.path:
         return CupertinoPageRoute(
+          fullscreenDialog: true,
           builder: (_) => PlayerPage(
             args: arguments as PlayerPageArguments,
           ),

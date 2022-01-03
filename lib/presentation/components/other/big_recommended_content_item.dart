@@ -56,8 +56,10 @@ class BigecommendedContentItem extends StatelessWidget {
                 ),
                 SizedBox(height: 8.sp),
                 Text(
-                  content.showContentType(),
-                  style: context.textTheme.caption,
+                  content.showContentType,
+                  style: context.textTheme.bodyText2!.copyWith(
+                    color: Colors.white70,
+                  ),
                 ),
                 SizedBox(height: 12.sp),
                 MiniWatchNowButton(context: context, onTap: onTap),

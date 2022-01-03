@@ -15,7 +15,7 @@ import 'package:gain_clone/presentation/components/other/dot.dart';
 import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 import 'package:gain_clone/presentation/components/other/smart_sign.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_page_tabbar.dart';
-import 'package:gain_clone/presentation/pages/home/player_page.dart';
+import 'package:gain_clone/presentation/pages/home/player/player_page.dart';
 
 class ContentPage extends StatefulWidget {
   final Content content;
@@ -153,7 +153,7 @@ class _ContentPageState extends State<ContentPage>
       Row(
         children: [
           Text(
-            widget.content.showContentType(),
+            widget.content.showContentType,
             style: context.textTheme.subtitle2,
           ),
           SizedBox(width: 12.sp),
@@ -177,11 +177,17 @@ class _ContentPageState extends State<ContentPage>
       SizedBox(height: 24.sp),
       WatchNowButton(
         onPressed: () {
+          Content content = Content.temp();
+          content.addParts([
+            ContentPart.temp(),
+            ContentPart.temp2(),
+            ContentPart.temp3(),
+          ]);
           NavigationService.pushNamed(
             PlayerPage.path,
             arguments: PlayerPageArguments(
-              content: Content.temp(),
-              contentPart: ContentPart.temp(),
+              content: content,
+              selectedContentIndex: 1,
             ),
           );
         },
@@ -197,7 +203,7 @@ class _ContentPageState extends State<ContentPage>
       ),
       SizedBox(height: 16.sp),
       Text(
-        widget.content.showContentType(),
+        widget.content.showContentType,
         style: context.textTheme.caption!.copyWith(
           color: Colors.white54,
           fontWeight: FontWeight.w400,

@@ -36,7 +36,17 @@ class Content {
     );
   }
 
-  String showContentType() {
+  void addPart(ContentPart contentPart) {
+    partList ??= [];
+    partList!.add(contentPart);
+  }
+
+  void addParts(List<ContentPart> contentPartList) {
+    partList ??= [];
+    partList!.addAll(contentPartList);
+  }
+
+  String get showContentType {
     switch (contentType) {
       case ContentType.series:
         return 'Dizi';

@@ -16,49 +16,53 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(builder: () {
-      return MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        navigatorKey: NavigationService.navigatorKey,
-        onGenerateRoute: NavigationRoute.generateRoute,
-        theme: ThemeData(
-          fontFamily: 'BeVietnamPro',
-          primaryColor: ColorConstants.primaryColor,
-          scaffoldBackgroundColor: ColorConstants.primaryColor,
-          textTheme: const TextTheme(
-            headline5: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
-            headline6: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-            subtitle1: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
-            subtitle2: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
-            bodyText1: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-            bodyText2: TextStyle(fontSize: 14),
-            overline: TextStyle(fontSize: 10),
-            caption: TextStyle(fontSize: 11, color: Colors.white),
-          ),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            brightness: Brightness.dark,
-            primary: ColorConstants.primaryColor,
-            secondary: ColorConstants.secondaryColor,
-          ),
-          switchTheme: SwitchThemeData(
-            thumbColor: MaterialStateProperty.all(Colors.green[800]),
-            trackColor: MaterialStateProperty.all(Colors.greenAccent[400]),
-          ),
-          appBarTheme: AppBarTheme(
-            iconTheme: const IconThemeData(
-              color: Colors.white,
+    return ScreenUtilInit(
+      builder: () {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          navigatorKey: NavigationService.navigatorKey,
+          onGenerateRoute: NavigationRoute.generateRoute,
+          theme: ThemeData(
+            fontFamily: 'BeVietnamPro',
+            primaryColor: ColorConstants.primaryColor,
+            scaffoldBackgroundColor: ColorConstants.primaryColor,
+            textTheme: const TextTheme(
+              headline3: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+              headline4: TextStyle(fontWeight: FontWeight.w600, fontSize: 22),
+              headline5: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
+              headline6: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+              subtitle1: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              subtitle2: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+              bodyText1: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              bodyText2: TextStyle(fontSize: 14),
+              overline: TextStyle(fontSize: 10),
+              caption: TextStyle(fontSize: 11, color: Colors.white),
             ),
-            backgroundColor: ColorConstants.secondaryColor,
-            elevation: 0,
-            centerTitle: false,
-            titleTextStyle: context.textTheme.bodyText1!
-                .copyWith(color: Colors.white, fontSize: 16),
-            toolbarHeight: kToolbarHeight * 0.8,
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              brightness: Brightness.dark,
+              primary: ColorConstants.primaryColor,
+              secondary: ColorConstants.secondaryColor,
+            ),
+            switchTheme: SwitchThemeData(
+              thumbColor: MaterialStateProperty.all(Colors.green[800]),
+              trackColor: MaterialStateProperty.all(Colors.greenAccent[400]),
+            ),
+            appBarTheme: AppBarTheme(
+              iconTheme: const IconThemeData(
+                color: Colors.white,
+              ),
+              backgroundColor: ColorConstants.secondaryColor,
+              elevation: 0,
+              centerTitle: false,
+              titleTextStyle: context.textTheme.bodyText1!
+                  .copyWith(color: Colors.white, fontSize: 16),
+              toolbarHeight: kToolbarHeight * 0.8,
+            ),
           ),
-        ),
-        home: const NavigationPage(),
-      );
-    });
+          home: const NavigationPage(),
+        );
+      },
+    );
   }
 }
