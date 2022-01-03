@@ -20,7 +20,9 @@ class PlayerPage extends StatelessWidget {
     required this.args,
   }) : super(key: key);
 
-  void closeTapped() {
+  void closeTapped(BuildContext context) async {
+    await context.read<PlayerViewModel>().setDefaultOrientation();
+
     NavigationService.pop();
   }
 
@@ -33,25 +35,31 @@ class PlayerPage extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final playerViewModel = context.read<PlayerViewModel>();
-          return Theme(
-            data: Theme.of(context).copyWith(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-            ),
-            child: GestureDetector(
-              onTap: playerViewModel.openOrCloseMediaDetailsField,
-              child: Scaffold(
-                body: PageView.builder(
-                  controller: playerViewModel.pageController,
-                  onPageChanged: (value) =>
-                      playerViewModel.onPageChanged(value),
-                  itemCount: args.content.partList!.length,
-                  itemBuilder: (context, index) => Stack(
-                    children: [
-                      _videoField(context, index), //video alanı
-                      _contentDetailsAndButtonsField(context,
-                          index), //video detaylar, slider, butonları iceren alan
-                    ],
+          return WillPopScope(
+            onWillPop: () async {
+              await context.read<PlayerViewModel>().setDefaultOrientation();
+              return true;
+            },
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: GestureDetector(
+                onTap: playerViewModel.openOrCloseMediaDetailsField,
+                child: Scaffold(
+                  body: PageView.builder(
+                    controller: playerViewModel.pageController,
+                    onPageChanged: (value) =>
+                        playerViewModel.onPageChanged(value),
+                    itemCount: args.content.partList!.length,
+                    itemBuilder: (context, index) => Stack(
+                      children: [
+                        _videoField(context, index), //video alanı
+                        _contentDetailsAndButtonsField(context,
+                            index), //video detaylar, slider, butonları iceren alan
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -112,17 +120,17 @@ class PlayerPage extends StatelessWidget {
                           padding: context.paddingHorizontal16x,
                           child: Column(
                             children: [
-                              _appBar(),
+                              _appBar(context),
                               const Spacer(),
                               Padding(
                                 padding: context.paddingHorizontal12x,
                                 child: Column(
                                   children: [
-                                    ..._contentDetailsField(
+                                    _contentDetailsField(
                                       context,
                                       contentPartIndex,
                                     ),
-                                    SizedBox(height: 16.sp),
+                                    SizedBox(height: 8.sp),
                                     _slider(contentPartIndex),
                                     SizedBox(height: 8.sp),
                                     _bottomIcons(context),
@@ -144,7 +152,7 @@ class PlayerPage extends StatelessWidget {
     );
   }
 
-  Row _appBar() {
+  Row _appBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -153,7 +161,7 @@ class PlayerPage extends StatelessWidget {
           iconData: Icons.branding_watermark_outlined,
         ),
         PlayerIconButton(
-          onPressed: closeTapped,
+          onPressed: () => closeTapped(context),
           iconData: Icons.close,
         ),
       ],
@@ -178,38 +186,49 @@ class PlayerPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _contentDetailsField(BuildContext context, int index) {
+  Widget _contentDetailsField(BuildContext context, int index) {
     final contentPart = args.content.partList![index];
-    return [
-      Text(
-        '${args.content.name} - ${contentPart.showID}', //TODO:TAM DOĞRU DEĞİL
-        style: context.textTheme.headline5!.copyWith(
-          color: Colors.white,
-        ),
-        maxLines: 2,
-      ),
-      SizedBox(height: 2.sp),
-      Row(
-        mainAxisSize: MainAxisSize.min,
+    return Align(
+      alignment: context.isPortait ? Alignment.center : Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: context.isPortait
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
         children: [
           Text(
-            '${args.content.showContentType}  •  ${contentPart.showID}',
-            style: context.textTheme.subtitle2!.copyWith(
-              color: Colors.white54,
+            '${args.content.name} - ${contentPart.showID}', //TODO:TAM DOĞRU DEĞİL
+            style: context.textTheme.headline5!.copyWith(
+              color: Colors.white,
             ),
+            maxLines: 2,
           ),
+          SizedBox(height: 2.sp),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${args.content.showContentType}  •  ${contentPart.showID}',
+                style: context.textTheme.subtitle2!.copyWith(
+                  color: Colors.white54,
+                ),
+              ),
+            ],
+          ),
+          if (context.isPortait) ...[
+            SizedBox(height: 12.sp),
+            Text(
+              contentPart.explanation,
+              maxLines: 2,
+              style: context.textTheme.subtitle2!.copyWith(
+                color: Colors.white.withOpacity(0.75),
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(height: 8.sp),
+          ]
         ],
       ),
-      SizedBox(height: 12.sp),
-      Text(
-        contentPart.explanation,
-        maxLines: 2,
-        style: context.textTheme.subtitle2!.copyWith(
-          color: Colors.white.withOpacity(0.75),
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ];
+    );
   }
 
   SizedBox _slider(int contentPartIndex) {

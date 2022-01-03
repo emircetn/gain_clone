@@ -71,7 +71,7 @@ class _MainPageState extends State<MainPage>
             contentList: contentList,
             onTapCallBack: (index) => pushContentPage(contentList[index]),
           ),
-          SizedBox(height: MediaQuery.of(context).padding.bottom + 96.h)
+          SizedBox(height: context.bottomPadding + 96.h)
         ],
       ),
     );

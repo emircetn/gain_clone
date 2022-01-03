@@ -4,16 +4,17 @@ import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
 import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
 import 'package:gain_clone/data/models/user.dart';
+import 'package:gain_clone/managers/user_manager.dart';
 import 'package:gain_clone/presentation/components/divider/app_divider.dart';
 import 'package:gain_clone/presentation/components/list_tile/app_list_tile.dart';
-import 'package:gain_clone/presentation/components/user/user_avatar.dart';
+import 'package:gain_clone/products/widgets/user_avatar.dart';
 import 'package:gain_clone/presentation/components/user/user_info_tile.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update.dart';
 import 'package:gain_clone/presentation/pages/home/webview_page.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
-  final User user = User.temp();
 
   void updateUserNameAndSurname() {
     NavigationService.pushNamed(
@@ -79,9 +80,9 @@ class ProfilePage extends StatelessWidget {
           padding: context.paddingHorizontal16x,
           children: [
             SizedBox(height: 36.sp),
-            UserAvatar(user: user),
+            const UserAvatar(),
             SizedBox(height: 18.sp),
-            ..._profileInfoField(context),
+            _profileInfoField(context),
             listsField(context),
             AppDivider(),
             _passwordField(context),
@@ -97,31 +98,35 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  List<Widget> _profileInfoField(BuildContext context) {
-    return [
-      Text(
-        'Profil',
-        style: context.textTheme.bodyText1,
+  Consumer _profileInfoField(BuildContext context) {
+    return Consumer<UserManager>(
+      builder: (context, userManager, _) => Column(
+        children: [
+          Text(
+            'Profil',
+            style: context.textTheme.bodyText1,
+          ),
+          SizedBox(height: 4.sp),
+          UserInfoTile(
+            context: context,
+            header: 'Ad Soyad',
+            text: userManager.user!.nameAndSurname,
+            onTap: updateUserNameAndSurname,
+          ),
+          UserInfoTile(
+            context: context,
+            header: 'Email',
+            text: userManager.user!.email,
+          ),
+          UserInfoTile(
+            context: context,
+            header: 'Doğum Tarihi',
+            text: userManager.user!.showBrithday,
+            onTap: updateBirtday,
+          ),
+        ],
       ),
-      SizedBox(height: 4.sp),
-      UserInfoTile(
-        context: context,
-        header: 'Ad Soyad',
-        text: user.nameAndSurname,
-        onTap: updateUserNameAndSurname,
-      ),
-      UserInfoTile(
-        context: context,
-        header: 'Email',
-        text: user.email,
-      ),
-      UserInfoTile(
-        context: context,
-        header: 'Doğum Tarihi',
-        text: '27 Ağustos 1292', //TODO:güncellenmeli
-        onTap: updateBirtday,
-      ),
-    ];
+    );
   }
 
   AppListTile listsField(BuildContext context) {

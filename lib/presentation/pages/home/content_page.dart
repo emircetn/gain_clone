@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/app_constants.dart';
-import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/data/models/content_part.dart';

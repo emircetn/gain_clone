@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class NavigationService {
@@ -29,7 +30,7 @@ class NavigationService {
     await showMaterialModalBottomSheet(
         context: context,
         builder: (context) => SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: context.height,
               child: widget,
             ));
   }

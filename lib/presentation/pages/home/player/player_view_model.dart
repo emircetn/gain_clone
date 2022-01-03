@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content_part.dart';
 import 'package:video_player/video_player.dart';
@@ -28,6 +29,7 @@ class PlayerViewModel extends ChangeNotifier {
   bool isEven(int index) => index % 2 == 0;
 
   PlayerViewModel(this.args) {
+    setAllOrientation();
     _currentPartIndex = args.selectedContentIndex;
     pageController = PageController(initialPage: _currentPartIndex);
     initAndListenTheVideo(_currentPartIndex);
@@ -132,5 +134,20 @@ class PlayerViewModel extends ChangeNotifier {
         videoPlayerController?.value.position;
     _currentPartIndex = value;
     initAndListenTheVideo(value);
+  }
+
+  void setAllOrientation() {
+    //TODO:Daha düzgün çalışacak şekilde güncellenebilir
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
+  }
+
+  Future<void> setDefaultOrientation() async {
+    await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   }
 }

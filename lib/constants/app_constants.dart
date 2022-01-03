@@ -10,6 +10,7 @@ class AppConstants {
 
   AppConstants._init();
   List<String> tabs = [
+    //TODO:Dbden çekilebilir
     'Güncel',
     'Haber',
     'Dizi',
@@ -18,6 +19,21 @@ class AppConstants {
     'Belgesel',
     'Müzik',
     'Spor'
+  ];
+
+  final List<String> monthList = [
+    'Ocak',
+    'Şubat',
+    'Mart',
+    'Nisan',
+    'Mayıs',
+    'Haziran',
+    'Temmuz',
+    'Ağustos',
+    'Eylül',
+    'Ekim',
+    'Kasım',
+    'Aralık',
   ];
 
   LinearGradient contentCoverSmallGradient = LinearGradient(
