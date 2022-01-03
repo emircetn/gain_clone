@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:gain_clone/constants/app_constants.dart';
 import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
@@ -100,22 +101,7 @@ class _ContentPageState extends State<ContentPage>
           Container(
             decoration: BoxDecoration(
               //border: Border.all(color: Colors.red),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.transparent,
-                  ColorConstants.primaryColor.withOpacity(0.27),
-                  ColorConstants.primaryColor.withOpacity(0.54),
-                  ColorConstants.primaryColor,
-                  ColorConstants.primaryColor,
-                ],
-              ),
+              gradient: AppConstants.instance.contentCoverSmallGradient,
             ),
           ),
           Positioned(

@@ -8,23 +8,24 @@ class PlayerViewModel extends ChangeNotifier {
   VideoPlayerController? videoPlayerController2;
 
   late PageController pageController;
-
   late int _currentPartIndex;
 
   bool isPlaying = false;
-  bool isLoadingInitialize = true;
+  bool isInitializeWaiting = true;
   bool isContentDetailsAndButtonsFieldShow = false;
 
   final PlayerPageArguments args;
 
-  Map<int, Duration?> tempPartAndLastDuration = {};
+  Map<int, Duration?> tempPartAndLastDuration = {}; //TODO:dbye eklenebilir
 
   ContentPart get currentContentPart =>
-      args.content.partList![_currentPartIndex];
+      args.content.partList![_currentPartIndex]; //o anki seçili bölümü getirir
 
   VideoPlayerController? get videoPlayerController => isEven(_currentPartIndex)
       ? videoPlayerController1
       : videoPlayerController2;
+
+  bool isEven(int index) => index % 2 == 0;
 
   PlayerViewModel(this.args) {
     _currentPartIndex = args.selectedContentIndex;
@@ -32,71 +33,63 @@ class PlayerViewModel extends ChangeNotifier {
     initAndListenTheVideo(_currentPartIndex);
   }
 
-  bool isEven(int index) => index % 2 == 0;
-
   void initAndListenTheVideo(int index) async {
-    isLoadingInitialize = true;
+    isInitializeWaiting = true;
     notifyListeners();
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (isEven(index)) {
+      //index çift ise video videoPlayerController1'e tek ise videoPlayerController2'ye atanır
       videoPlayerController2?.pause();
       videoPlayerController1 = VideoPlayerController.network(
         args.content.partList![index].videoUrl,
-        videoPlayerOptions: VideoPlayerOptions(),
       )..initialize().then(
-          (value) async {
-            try {
-              if (tempPartAndLastDuration[_currentPartIndex] != null) {
-                await videoPlayerController1!
-                    .seekTo(tempPartAndLastDuration[_currentPartIndex]!);
-              }
-              await videoPlayerController1!.play();
+          (_) async {
+            if (tempPartAndLastDuration[_currentPartIndex] != null) {
+              // video daha önce oynatıldıysa tekrar oynatılacakken en sonra kaldığı yerden oynaması için gerekli ayarlamalar
 
-              isPlaying = true;
-              isLoadingInitialize = false;
-              notifyListeners();
-              videoPlayerController1!.addListener(() {
-                final vdeoPlayerValue = videoPlayerController1!.value;
-                if (vdeoPlayerValue.isInitialized &&
-                    vdeoPlayerValue.position == vdeoPlayerValue.duration) {
-                  isPlaying = false;
-                  notifyListeners();
-                }
-              });
-            } catch (e) {
-              debugPrint(e.toString());
+              await videoPlayerController1!
+                  .seekTo(tempPartAndLastDuration[_currentPartIndex]!);
             }
+            await videoPlayerController1!.play();
+
+            isPlaying = true;
+            isInitializeWaiting = false;
+            notifyListeners();
+            videoPlayerController1!.addListener(() {
+              // video bittiğinde isPlaying'e false atanıp ekran güncelleniyor
+              final vdeoPlayerValue = videoPlayerController1!.value;
+              if (vdeoPlayerValue.isInitialized &&
+                  vdeoPlayerValue.position == vdeoPlayerValue.duration) {
+                isPlaying = false;
+                notifyListeners();
+              }
+            });
           },
         );
     } else {
       videoPlayerController1?.pause();
       videoPlayerController2 = VideoPlayerController.network(
         args.content.partList![index].videoUrl,
-        videoPlayerOptions: VideoPlayerOptions(),
       )..initialize().then(
-          (value) async {
-            try {
-              if (tempPartAndLastDuration[_currentPartIndex] != null) {
-                await videoPlayerController2!
-                    .seekTo(tempPartAndLastDuration[_currentPartIndex]!);
-              }
-              await videoPlayerController2!.play();
-
-              isPlaying = true;
-              isLoadingInitialize = false;
-              notifyListeners();
-              videoPlayerController2!.addListener(() {
-                final vdeoPlayerValue = videoPlayerController2!.value;
-                if (vdeoPlayerValue.isInitialized &&
-                    vdeoPlayerValue.position == vdeoPlayerValue.duration) {
-                  isPlaying = false;
-                  notifyListeners();
-                }
-              });
-            } catch (e) {
-              debugPrint(e.toString());
+          (_) async {
+            if (tempPartAndLastDuration[_currentPartIndex] != null) {
+              await videoPlayerController2!
+                  .seekTo(tempPartAndLastDuration[_currentPartIndex]!);
             }
+            await videoPlayerController2!.play();
+
+            isPlaying = true;
+            isInitializeWaiting = false;
+            notifyListeners();
+            videoPlayerController2!.addListener(() {
+              final vdeoPlayerValue = videoPlayerController2!.value;
+              if (vdeoPlayerValue.isInitialized &&
+                  vdeoPlayerValue.position == vdeoPlayerValue.duration) {
+                isPlaying = false;
+                notifyListeners();
+              }
+            });
           },
         );
     }
@@ -117,6 +110,7 @@ class PlayerViewModel extends ChangeNotifier {
 
   Future playOrPauseVideo() async {
     if (videoPlayerController!.value.isInitialized == true) {
+      //videoPlayerController getter ilgili videoPlayerController'ı çağırır ve işlem o controller ile yapılır
       if (videoPlayerController!.value.isPlaying == true) {
         await videoPlayerController!.pause();
         isPlaying = false;

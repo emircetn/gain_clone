@@ -8,7 +8,7 @@ class PlayerIconButton extends IconButton {
     required final VoidCallback? onPressed,
   }) : super(
           key: key,
-          icon: Icon(iconData, size: 24.sp),
+          icon: Icon(iconData, size: 22.sp),
           onPressed: onPressed,
         );
 }

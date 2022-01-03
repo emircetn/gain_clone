@@ -26,9 +26,10 @@ class PlayerSlider extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
+          width: 40,
           child: Text(
             durationToHHmmSS(currentDuration),
+            style: context.textTheme.caption,
             textAlign: TextAlign.start,
           ),
         ),
@@ -37,11 +38,11 @@ class PlayerSlider extends StatelessWidget {
             child: SliderTheme(
               data: SliderThemeData(
                 overlayShape: SliderComponentShape.noOverlay,
-                trackHeight: 7,
-                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+                trackHeight: 5,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
                 thumbColor: Colors.red,
                 activeTrackColor: Colors.red,
-                inactiveTrackColor: Colors.white24,
+                inactiveTrackColor: Colors.white38,
                 showValueIndicator: ShowValueIndicator.never,
                 trackShape: const RectangularSliderTrackShape(),
               ),
@@ -54,9 +55,10 @@ class PlayerSlider extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: 50,
+          width: 40,
           child: Text(
             durationToHHmmSS(totalDuration),
+            style: context.textTheme.caption,
             textAlign: TextAlign.end,
           ),
         ),

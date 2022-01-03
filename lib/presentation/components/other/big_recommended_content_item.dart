@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/constants/color_constants.dart';
+import 'package:gain_clone/constants/app_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/presentation/components/buttons/mini_watch_now_button.dart';
@@ -27,22 +27,7 @@ class BigecommendedContentItem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               //  border: Border.all(color: Colors.red),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.transparent,
-                  ColorConstants.primaryColor.withOpacity(0.12),
-                  ColorConstants.primaryColor.withOpacity(0.38),
-                  ColorConstants.primaryColor.withOpacity(0.54),
-                  ColorConstants.primaryColor.withOpacity(0.87),
-                  ColorConstants.primaryColor,
-                  ColorConstants.primaryColor,
-                ],
-              ),
+              gradient: AppConstants.instance.contentCoverBigGradient,
             ),
           ),
           Align(

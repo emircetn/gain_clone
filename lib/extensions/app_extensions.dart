@@ -88,6 +88,8 @@ extension PaddingExtensionHorizontal on BuildContext {
       EdgeInsets.symmetric(horizontal: ScreenUtil().setSp(12));
   EdgeInsets get paddingHorizontal16x =>
       EdgeInsets.symmetric(horizontal: ScreenUtil().setSp(16));
+  EdgeInsets get paddingHorizontal32x =>
+      EdgeInsets.symmetric(horizontal: ScreenUtil().setSp(32));
 }
 
 extension PaddingExtensionVertical on BuildContext {
@@ -108,7 +110,7 @@ extension PaddingExtensionVertical on BuildContext {
 extension SizeExtension on num {
   double get w => ScreenUtil().setWidth(this);
   double get h => ScreenUtil().setHeight(this);
-  double get sp => ScreenUtil().setSp(this);
+  double get sp => toDouble();
 }
 
 extension ThemeExtension on BuildContext {
