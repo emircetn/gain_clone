@@ -9,6 +9,8 @@ class AppConstants {
   }
 
   AppConstants._init();
+
+  final int minimumUserNameCount = 5;
   List<String> tabs = [
     //TODO:Dbden çekilebilir
     'Güncel',

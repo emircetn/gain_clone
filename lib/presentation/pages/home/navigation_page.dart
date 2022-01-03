@@ -40,7 +40,7 @@ class _NavigationPageState extends State<NavigationPage> {
         icon: PhosphorIcons.download_simple,
         page: DowloadsPage(),
       ),
-      AppBottomNavigationBarItemModel(
+      const AppBottomNavigationBarItemModel(
         text: 'Profil',
         icon: PhosphorIcons.user,
         page: ProfilePage(),

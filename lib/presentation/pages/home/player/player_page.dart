@@ -32,41 +32,39 @@ class PlayerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PlayerViewModel>(
       create: (context) => PlayerViewModel(args),
-      child: Builder(
-        builder: (context) {
-          final playerViewModel = context.read<PlayerViewModel>();
-          return WillPopScope(
-            onWillPop: () async {
-              await context.read<PlayerViewModel>().setDefaultOrientation();
-              return true;
-            },
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-              ),
-              child: GestureDetector(
-                onTap: playerViewModel.openOrCloseMediaDetailsField,
-                child: Scaffold(
-                  body: PageView.builder(
-                    controller: playerViewModel.pageController,
-                    onPageChanged: (value) =>
-                        playerViewModel.onPageChanged(value),
-                    itemCount: args.content.partList!.length,
-                    itemBuilder: (context, index) => Stack(
-                      children: [
-                        _videoField(context, index), //video alanı
-                        _contentDetailsAndButtonsField(context,
-                            index), //video detaylar, slider, butonları iceren alan
-                      ],
-                    ),
+      builder: (context, _) {
+        final playerViewModel = context.read<PlayerViewModel>();
+        return WillPopScope(
+          onWillPop: () async {
+            await context.read<PlayerViewModel>().setDefaultOrientation();
+            return true;
+          },
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: GestureDetector(
+              onTap: playerViewModel.openOrCloseMediaDetailsField,
+              child: Scaffold(
+                body: PageView.builder(
+                  controller: playerViewModel.pageController,
+                  onPageChanged: (value) =>
+                      playerViewModel.onPageChanged(value),
+                  itemCount: args.content.partList!.length,
+                  itemBuilder: (context, index) => Stack(
+                    children: [
+                      _videoField(context, index), //video alanı
+                      _contentDetailsAndButtonsField(context,
+                          index), //video detaylar, slider, butonları iceren alan
+                    ],
                   ),
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

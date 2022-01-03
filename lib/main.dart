@@ -79,6 +79,7 @@ class App extends StatelessWidget {
                 titleTextStyle: context.textTheme.bodyText1!
                     .copyWith(color: Colors.white, fontSize: 16),
                 toolbarHeight: kToolbarHeight * 0.8,
+                systemOverlayStyle: SystemUiOverlayStyle.light,
               ),
             ),
             home: const NavigationPage(),
