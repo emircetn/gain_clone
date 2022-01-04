@@ -3,77 +3,67 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_item_model.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_bar.dart';
 import 'package:gain_clone/presentation/components/other/keep_alive_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation/navigation_view_model.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/downloads_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/main_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/profile/profile_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/search_page.dart';
+import 'package:provider/provider.dart';
 
-class NavigationPage extends StatefulWidget {
+class NavigationPage extends StatelessWidget {
   static const String path = '/navigation';
 
-  const NavigationPage({Key? key}) : super(key: key);
+  NavigationPage({Key? key}) : super(key: key);
 
-  @override
-  State<NavigationPage> createState() => _NavigationPageState();
-}
-
-class _NavigationPageState extends State<NavigationPage> {
-  final ValueNotifier<int> currentTabNotifier = ValueNotifier<int>(0);
-  late final List<AppBottomNavigationBarItemModel> _tabItems;
-  @override
-  void initState() {
-    _tabItems = [
-      const AppBottomNavigationBarItemModel(
-        text: 'AnaSayfa',
-        icon: PhosphorIcons.house_line,
-        page: KeepAlivePage(
-          child: MainPage(),
-        ),
+  final List<AppBottomNavigationBarItemModel> _tabItems = [
+    const AppBottomNavigationBarItemModel(
+      text: 'AnaSayfa',
+      icon: PhosphorIcons.house_line,
+      page: KeepAlivePage(
+        child: MainPage(),
       ),
-      const AppBottomNavigationBarItemModel(
-        text: 'Arama',
-        icon: PhosphorIcons.magnifying_glass,
-        page: SearchPage(),
-      ),
-      const AppBottomNavigationBarItemModel(
-        text: 'İndirilenler',
-        icon: PhosphorIcons.download_simple,
-        page: DowloadsPage(),
-      ),
-      const AppBottomNavigationBarItemModel(
-        text: 'Profil',
-        icon: PhosphorIcons.user,
-        page: ProfilePage(),
-      ),
-    ];
-    super.initState();
-  }
+    ),
+    const AppBottomNavigationBarItemModel(
+      text: 'Arama',
+      icon: PhosphorIcons.magnifying_glass,
+      page: SearchPage(),
+    ),
+    const AppBottomNavigationBarItemModel(
+      text: 'İndirilenler',
+      icon: PhosphorIcons.download_simple,
+      page: DowloadsPage(),
+    ),
+    const AppBottomNavigationBarItemModel(
+      text: 'Profil',
+      icon: PhosphorIcons.user,
+      page: ProfilePage(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: ValueListenableBuilder<int>(
-        valueListenable: currentTabNotifier,
-        builder: (context, currentTab, _) {
-          return Stack(
+      body: ChangeNotifierProvider(
+        create: (context) => NavigationViewModel(),
+        child: Consumer<NavigationViewModel>(
+          builder: (context, bavigationViewModel, child) => Stack(
             children: [
-              _tabItems[currentTab].page,
-              bottomNavigationBar(currentTab)
+              _tabItems[bavigationViewModel.currentTab].page,
+              bottomNavigationBar(context, bavigationViewModel.currentTab)
             ],
-          );
-        },
+          ),
+        ),
       ),
     );
   }
 
-  AppBottomNavigationBar bottomNavigationBar(int currentTab) {
+  AppBottomNavigationBar bottomNavigationBar(
+      BuildContext context, int currentTab) {
     return AppBottomNavigationBar(
       items: _tabItems,
       selectedIndex: currentTab,
-      tabChanged: (index) {
-        currentTabNotifier.value = index;
-      },
+      tabChanged: context.read<NavigationViewModel>().tabChanged,
     );
   }
 }

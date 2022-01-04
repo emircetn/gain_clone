@@ -23,7 +23,7 @@ class NavigationRoute {
       case NavigationPage.path:
         return CupertinoPageRoute(
           fullscreenDialog: true,
-          builder: (_) => const NavigationPage(),
+          builder: (_) => NavigationPage(),
         );
       case UserInformationUpdatePage.path:
         return CupertinoPageRoute(
