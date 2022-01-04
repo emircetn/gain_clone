@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/data/models/content_part.dart';
 import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 
 class ContentPartItem extends StatelessWidget {
-  final String contentName;
+  final Content content;
   final ContentPart contentPart;
   const ContentPartItem(
-      {Key? key, required this.contentName, required this.contentPart})
+      {Key? key, required this.content, required this.contentPart})
       : super(key: key);
 
   @override
@@ -36,7 +37,7 @@ class ContentPartItem extends StatelessWidget {
                 ),
                 width: context.width * 0.3,
                 child: Text(
-                  'Bölüm ${contentPart.id}',
+                  contentPart.showOnlyPartOrName,
                   style: context.textTheme.caption,
                   textAlign: TextAlign.center,
                 ),
@@ -46,8 +47,8 @@ class ContentPartItem extends StatelessWidget {
         ),
       ),
       title: Text(
-        (contentPart.name != null ? '${contentPart.name} - ' : '') +
-            '$contentName - ${contentPart.id}.bölüm',
+        '${content.name}${contentPart.showPartNoAndName}', //TODO:TAM DOĞRU DEĞİL
+
         style: context.textTheme.subtitle2!,
       ),
       subtitle: Text(

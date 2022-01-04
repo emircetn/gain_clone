@@ -75,7 +75,7 @@ class _ContentPageState extends State<ContentPage>
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return ContentPartItem(
-                      contentName: widget.content.name,
+                      content: widget.content,
                       contentPart: ContentPart.temp(),
                     );
                   },
@@ -165,8 +165,6 @@ class _ContentPageState extends State<ContentPage>
           Content content = Content.temp();
           content.addParts([
             ContentPart.temp(),
-            ContentPart.temp2(),
-            ContentPart.temp3(),
           ]);
           NavigationService.pushNamed(
             PlayerPage.path,

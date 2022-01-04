@@ -200,7 +200,7 @@ class PlayerPage extends StatelessWidget {
             : CrossAxisAlignment.start,
         children: [
           Text(
-            '${args.content.name} - ${contentPart.showID}', //TODO:TAM DOĞRU DEĞİL
+            '${args.content.name}${contentPart.showPartNoAndName}', //TODO:TAM DOĞRU DEĞİL
             style: context.textTheme.headline5!.copyWith(
               color: Colors.white,
             ),
@@ -211,7 +211,7 @@ class PlayerPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '${args.content.showContentType}  •  ${contentPart.showID}',
+                '${args.content.showContentType}  •  ${contentPart.showOnlyPartOrName}',
                 style: context.textTheme.subtitle2!.copyWith(
                   color: Colors.white54,
                 ),

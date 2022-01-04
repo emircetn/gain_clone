@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:gain_clone/data/models/content_part.dart';
 
 enum ContentType {
@@ -56,4 +58,29 @@ class Content {
         return 'Program';
     }
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'explanation': explanation,
+      'contentType': contentType.index,
+      'coverImageUrl': coverImageUrl,
+      'imdbScore': imdbScore,
+    };
+  }
+
+  factory Content.fromMap(Map<String, dynamic> map) {
+    return Content(
+      name: map['name'] ?? '',
+      explanation: map['explanation'] ?? '',
+      contentType: ContentType.values[map['contentType'] ?? 0],
+      coverImageUrl: map['coverImageUrl'] ?? '',
+      imdbScore: map['imdbScore']?.toDouble(),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Content.fromJson(String source) =>
+      Content.fromMap(json.decode(source));
 }

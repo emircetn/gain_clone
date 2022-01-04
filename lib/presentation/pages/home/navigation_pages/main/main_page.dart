@@ -7,7 +7,9 @@ import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/presentation/components/other/content_type_horizontal_list.dart';
 import 'package:gain_clone/presentation/components/other/recommended_contents_slider.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_types_tabbar.dart';
-import 'package:gain_clone/presentation/pages/home/content_page.dart';
+import 'package:gain_clone/presentation/pages/home/content/content_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/main/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -37,6 +39,10 @@ class _MainPageState extends State<MainPage>
     super.dispose();
   }
 
+  void exp(BuildContext context) {
+    context.read<MainViewModel>().getContents();
+  }
+
   void pushContentPage(Content content) {
     NavigationService.pushWithModalBottomSheet(
       context,
@@ -46,34 +52,43 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          _recommendeds(),
-          SizedBox(height: 8.sp),
-          _tabbarForContentTypes(),
-          SizedBox(height: 16.sp),
-          ContentTypeHorizontalList(
-            headerText: 'Öne Çıkanlar',
-            contentList: contentList,
-            onTapCallBack: (index) => pushContentPage(contentList[index]),
+    return ChangeNotifierProvider(
+      create: (context) => MainViewModel(tabController),
+      builder: (context, _) {
+        return Scaffold(
+          body: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              _recommendeds(),
+              SizedBox(height: 8.sp),
+              _tabbarForContentTypes(),
+              ElevatedButton(
+                onPressed: () => exp(context),
+                child: Text('data'),
+              ),
+              SizedBox(height: 16.sp),
+              ContentTypeHorizontalList(
+                headerText: 'Öne Çıkanlar',
+                contentList: contentList,
+                onTapCallBack: (index) => pushContentPage(contentList[index]),
+              ),
+              SizedBox(height: 24.sp),
+              ContentTypeHorizontalList(
+                headerText: 'Ücretsiz Başla',
+                contentList: contentList,
+                onTapCallBack: (index) => pushContentPage(contentList[index]),
+              ),
+              SizedBox(height: 24.sp),
+              ContentTypeHorizontalList(
+                headerText: 'GAİN Orijinal Komediler',
+                contentList: contentList,
+                onTapCallBack: (index) => pushContentPage(contentList[index]),
+              ),
+              SizedBox(height: context.bottomPadding + 96.h)
+            ],
           ),
-          SizedBox(height: 24.sp),
-          ContentTypeHorizontalList(
-            headerText: 'Ücretsiz Başla',
-            contentList: contentList,
-            onTapCallBack: (index) => pushContentPage(contentList[index]),
-          ),
-          SizedBox(height: 24.sp),
-          ContentTypeHorizontalList(
-            headerText: 'GAİN Orijinal Komediler',
-            contentList: contentList,
-            onTapCallBack: (index) => pushContentPage(contentList[index]),
-          ),
-          SizedBox(height: context.bottomPadding + 96.h)
-        ],
-      ),
+        );
+      },
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bot
 import 'package:gain_clone/presentation/components/other/keep_alive_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation/navigation_view_model.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/downloads_page.dart';
-import 'package:gain_clone/presentation/pages/home/navigation_pages/main_page.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/main/main_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/profile/profile_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/search_page.dart';
 import 'package:provider/provider.dart';

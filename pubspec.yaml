@@ -32,6 +32,9 @@ dependencies:
   #
   video_player: ^2.2.10
   
+  #network
+  dio: ^4.0.4
+  
   #general utils
   intl: ^0.17.0
   mask_text_input_formatter: ^2.0.0

@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 class ContentPart {
-  final int id;
+  final int? part;
   final String? name;
   final String coverUrl;
   final String videoUrl;
@@ -8,7 +10,7 @@ class ContentPart {
 
   ContentPart({
     this.name,
-    required this.id,
+    required this.part,
     required this.coverUrl,
     required this.videoUrl,
     this.videoAspectRatio = 1.7,
@@ -18,7 +20,7 @@ class ContentPart {
   factory ContentPart.temp() {
     return ContentPart(
       name: 'Özel',
-      id: 1,
+      part: 1,
       coverUrl: 'https://assets-jpcust.jwpsrv.com/thumbnails/f2ffc680-640.jpg',
       videoUrl:
           'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
@@ -29,7 +31,7 @@ class ContentPart {
   factory ContentPart.temp2() {
     return ContentPart(
       name: 'Tüzel',
-      id: 2,
+      part: 2,
       coverUrl: 'https://assets-jpcust.jwpsrv.com/thumbnails/f2ffc680-640.jpg',
       videoUrl:
           'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
@@ -39,7 +41,7 @@ class ContentPart {
   factory ContentPart.temp3() {
     return ContentPart(
       name: 'Özel Gibi',
-      id: 3,
+      part: 3,
       coverUrl: 'https://assets-jpcust.jwpsrv.com/thumbnails/f2ffc680-640.jpg',
       videoUrl:
           'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
@@ -47,12 +49,50 @@ class ContentPart {
     );
   }
 
-  String get showID {
+  String get showPartNoAndName {
     //TODO:geliştirilmeli
-    if (id == 0) {
-      return 'Fragman';
+    if (part == null) {
+      return ' - $name';
+    } else if (name == null) {
+      return ' - $part. Bölüm';
     } else {
-      return '$id.Bölüm';
+      return '- $part. Bölüm - $name ';
     }
   }
+
+  String get showOnlyPartOrName {
+    //TODO:geliştirilmeli
+    if (part == null) {
+      return '$name';
+    } else {
+      return '$part. Bölüm';
+    }
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'part': part,
+      'name': name,
+      'coverUrl': coverUrl,
+      'videoUrl': videoUrl,
+      'videoAspectRatio': videoAspectRatio,
+      'explanation': explanation,
+    };
+  }
+
+  factory ContentPart.fromMap(Map<String, dynamic> map) {
+    return ContentPart(
+      part: map['part']?.toInt() ?? 0,
+      name: map['name'],
+      coverUrl: map['coverUrl'] ?? '',
+      videoUrl: map['videoUrl'] ?? '',
+      videoAspectRatio: map['videoAspectRatio']?.toDouble() ?? 1.7,
+      explanation: map['explanation'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ContentPart.fromJson(String source) =>
+      ContentPart.fromMap(json.decode(source));
 }
