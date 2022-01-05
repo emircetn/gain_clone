@@ -22,7 +22,7 @@ class PlayerViewModel extends ChangeNotifier {
   Map<int, Duration?> tempPartAndLastDuration = {}; //TODO:dbye eklenebilir
 
   ContentPart get currentContentPart =>
-      args.content.partList![_currentPartIndex]; //o anki seçili bölümü getirir
+      args.partList[_currentPartIndex]; //o anki seçili bölümü getirir
 
   VideoPlayerController? get videoPlayerController => isEven(_currentPartIndex)
       ? videoPlayerController1
@@ -45,7 +45,7 @@ class PlayerViewModel extends ChangeNotifier {
       //index çift ise video videoPlayerController1'e tek ise videoPlayerController2'ye atanır
       videoPlayerController2?.pause();
       videoPlayerController1 = VideoPlayerController.network(
-        args.content.partList![index].videoUrl,
+        args.partList[index].videoUrl,
       )..initialize().then(
           (_) async {
             if (tempPartAndLastDuration[_currentPartIndex] != null) {
@@ -76,7 +76,7 @@ class PlayerViewModel extends ChangeNotifier {
       await Future.delayed(const Duration(milliseconds: 500));
       videoPlayerController1?.pause();
       videoPlayerController2 = VideoPlayerController.network(
-        args.content.partList![index].videoUrl,
+        args.partList[index].videoUrl,
       )..initialize().then(
           (_) async {
             if (tempPartAndLastDuration[_currentPartIndex] != null) {

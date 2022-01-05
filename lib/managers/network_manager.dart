@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-enum ServicePath { contents }
+enum ServicePath { contents, contentHeaders, contentParts }
 
 class NetworkManager {
   static NetworkManager? _instace;
@@ -22,7 +22,15 @@ extension ServicePathExtension on ServicePath {
   String get rawValue {
     switch (this) {
       case ServicePath.contents:
-        return '/contents.json';
+        return '/contents';
+      case ServicePath.contentHeaders:
+        return '/contentHeaders';
+      case ServicePath.contentParts:
+        return '/contentParts';
     }
   }
+}
+
+extension PathExtensions on String {
+  String get toJson => '$this.json';
 }

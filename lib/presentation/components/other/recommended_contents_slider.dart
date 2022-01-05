@@ -2,10 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/data/models/content.dart';
+import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:gain_clone/presentation/components/other/big_recommended_content_item.dart';
 
 class RecommendedContentsSlider extends StatefulWidget {
-  final List<Content> contents;
+  final List<Content>? contents;
   final void Function(int) onTapCallBack;
   const RecommendedContentsSlider({
     Key? key,
@@ -22,36 +23,42 @@ class _RecommendedContentsSliderState extends State<RecommendedContentsSlider> {
   ValueNotifier<int> pageIndexNotifier = ValueNotifier<int>(0);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CarouselSlider.builder(
-          options: CarouselOptions(
-            onPageChanged: (index, reason) => pageIndexNotifier.value = index,
+    return widget.contents == null
+        ? SizedBox(
             height: context.height * .6,
-            viewportFraction: 1,
-          ),
-          itemCount: widget.contents.length,
-          itemBuilder: (context, index, c) {
-            return BigecommendedContentItem(
-              content: widget.contents[index],
-              onTap: () => widget.onTapCallBack(index),
-              height: context.height * .6,
-            );
-          },
-        ),
-        SizedBox(height: 8.sp),
-        ValueListenableBuilder<int>(
-          valueListenable: pageIndexNotifier,
-          builder: (context, pageIndex, _) {
-            return _PageIndicatorWidget(
-              dotCount: widget.contents.length,
-              index: pageIndex,
-            );
-          },
-        ),
-        SizedBox(height: 12.sp),
-      ],
-    );
+            child: const Center(child: AppLinearProgressIndicator()),
+          )
+        : Column(
+            children: [
+              CarouselSlider.builder(
+                options: CarouselOptions(
+                  onPageChanged: (index, reason) =>
+                      pageIndexNotifier.value = index,
+                  height: context.height * .6,
+                  viewportFraction: 1,
+                ),
+                itemCount: widget.contents!.length,
+                itemBuilder: (context, index, c) {
+                  return BigecommendedContentItem(
+                    content: widget.contents![index],
+                    onTap: () => widget.onTapCallBack(index),
+                    height: context.height * .6,
+                  );
+                },
+              ),
+              SizedBox(height: 8.sp),
+              ValueListenableBuilder<int>(
+                valueListenable: pageIndexNotifier,
+                builder: (context, pageIndex, _) {
+                  return _PageIndicatorWidget(
+                    dotCount: widget.contents!.length,
+                    index: pageIndex,
+                  );
+                },
+              ),
+              SizedBox(height: 12.sp),
+            ],
+          );
   }
 }
 

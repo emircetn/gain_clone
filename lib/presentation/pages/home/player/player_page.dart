@@ -51,7 +51,7 @@ class PlayerPage extends StatelessWidget {
                   controller: playerViewModel.pageController,
                   onPageChanged: (value) =>
                       playerViewModel.onPageChanged(value),
-                  itemCount: args.content.partList!.length,
+                  itemCount: args.partList.length,
                   itemBuilder: (context, index) => Stack(
                     children: [
                       _videoField(context, index), //video alanı
@@ -82,15 +82,14 @@ class PlayerPage extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: AspectRatio(
-          aspectRatio:
-              args.content.partList![contentPartIndex].videoAspectRatio,
+          aspectRatio: args.partList[contentPartIndex].videoAspectRatio,
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 200),
             child: videoPlayerController == null ||
                     isInitializeWaiting ==
                         true //videoPlayerController null ise veya initialize işlemi bitmediyse video kapğı gösterilir
                 ? CachedNetworkImage(
-                    imageUrl: args.content.partList![contentPartIndex].coverUrl,
+                    imageUrl: args.partList[contentPartIndex].coverUrl,
                     fit: BoxFit.cover,
                   )
                 : VideoPlayer(
@@ -191,7 +190,7 @@ class PlayerPage extends StatelessWidget {
   }
 
   Widget _contentDetailsField(BuildContext context, int index) {
-    final contentPart = args.content.partList![index];
+    final contentPart = args.partList[index];
     return Align(
       alignment: context.isPortait ? Alignment.center : Alignment.centerLeft,
       child: Column(
@@ -200,7 +199,7 @@ class PlayerPage extends StatelessWidget {
             : CrossAxisAlignment.start,
         children: [
           Text(
-            '${args.content.name}${contentPart.showPartNoAndName}', //TODO:TAM DOĞRU DEĞİL
+            '${args.content.name}${contentPart.showPartNoAndName}',
             style: context.textTheme.headline5!.copyWith(
               color: Colors.white,
             ),
@@ -211,7 +210,7 @@ class PlayerPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '${args.content.showContentType}  •  ${contentPart.showOnlyPartOrName}',
+                '${args.content.showContentType}  •  ${contentPart.showPartNoAndNameForPlayer}',
                 style: context.textTheme.subtitle2!.copyWith(
                   color: Colors.white54,
                 ),

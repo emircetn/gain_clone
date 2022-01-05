@@ -17,7 +17,6 @@ class ProfileViewModel extends ChangeNotifier {
   Future<bool> updateBrithday(BuildContext context, String newValue) async {
     await Future.delayed(const Duration(seconds: 1));
     //TODO:servis eklenecek
-
     context.read<UserManager>().setUser =
         User.temp(brithday: DateFormat('dd/MM/yyy').parse(newValue));
     return true;

@@ -6,7 +6,7 @@ import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
 import 'package:gain_clone/presentation/pages/home/navigation/navigation_page.dart';
 import 'package:gain_clone/presentation/pages/home/player/player_page.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page.dart';
-import 'package:gain_clone/presentation/pages/home/webview_page.dart';
+import 'package:gain_clone/presentation/pages/home/webview/webview_page.dart';
 import 'package:gain_clone/presentation/pages/landing_page.dart';
 
 import '../../../main.dart';

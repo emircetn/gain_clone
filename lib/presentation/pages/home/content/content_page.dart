@@ -3,88 +3,89 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/app_constants.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 
 import 'package:gain_clone/presentation/components/buttons/circle_icon_button.dart';
 import 'package:gain_clone/presentation/components/buttons/watch_now_button.dart';
 import 'package:gain_clone/presentation/components/divider/app_divider.dart';
+import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:gain_clone/presentation/components/items/content_part_item.dart';
 import 'package:gain_clone/presentation/components/other/dot.dart';
 import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
 import 'package:gain_clone/presentation/components/other/smart_sign.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_page_tabbar.dart';
+import 'package:gain_clone/presentation/pages/home/content/content_view_model.dart';
 import 'package:gain_clone/presentation/pages/home/player/player_page.dart';
+import 'package:provider/provider.dart';
 
-class ContentPage extends StatefulWidget {
+class ContentPage extends StatelessWidget {
   final Content content;
   const ContentPage({
     Key? key,
     required this.content,
   }) : super(key: key);
 
-  @override
-  State<ContentPage> createState() => _ContentPageState();
-}
-
-class _ContentPageState extends State<ContentPage>
-    with SingleTickerProviderStateMixin {
-  late final TabController tabController;
-  @override
-  void initState() {
-    tabController = TabController(length: 2, vsync: this);
-    super.initState();
+  void watchNowTapped(BuildContext context, [int partIndex = 0]) {
+    final contextPartList = context.read<ContentViewModel>().contentPartList!;
+    NavigationService.pushNamed(
+      PlayerPage.path,
+      arguments: PlayerPageArguments(
+        content: content,
+        partList: contextPartList, //tek part agöre güncellenecek
+        selectedContentIndex: partIndex,
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
+  List<String> get tabHeaders => const ['Bölümler', 'Benzer İçerikler'];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          coverAndCloseField(context),
-          Padding(
-            padding: context.paddingHorizontal16x + context.paddingHorizontal2x,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                ...contentDetails(context),
-                SizedBox(height: 12.sp),
-                buttonsField(),
-                SizedBox(height: 32.sp),
+    return ChangeNotifierProvider(
+      create: (context) => ContentViewModel(content),
+      builder: (context, child) => Scaffold(
+        body: content.containsOnePart
+            ? body(context)
+            : DefaultTabController(
+                length: 2,
+                child: body(context),
+              ),
+      ),
+    );
+  }
+
+  ListView body(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        coverAndCloseField(context),
+        Padding(
+          padding: context.paddingHorizontal16x + context.paddingHorizontal2x,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              ...contentDetails(context),
+              SizedBox(height: 12.sp),
+              buttonsField(),
+              SizedBox(height: 32.sp),
+              if (context.watch<ContentViewModel>().isLoadingParts)
+                const AppLinearProgressIndicator()
+              else ...[
                 AppDivider(),
                 SizedBox(height: 12.sp),
-                ContentPageTabbar(
-                  context: context,
-                  controller: tabController,
-                  tabs: const ['Bölümler', 'Benzer İçerikler'],
-                ),
-                ListView.separated(
-                  separatorBuilder: (context, index) => SizedBox(height: 32.sp),
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ContentPartItem(
-                      content: widget.content,
-                      contentPart: ContentPart.temp(),
-                    );
-                  },
-                )
+                if (!content.containsOnePart) ...[
+                  ContentPageTabbar(context: context, tabs: tabHeaders),
+                  SizedBox(height: 24.sp),
+                  contentPartsField(context),
+                ],
               ],
-            ),
-          )
-        ],
-      ),
+            ],
+          ),
+        )
+      ],
     );
   }
 
@@ -94,7 +95,7 @@ class _ContentPageState extends State<ContentPage>
       child: Stack(
         children: [
           NetworkImageWithShimmer(
-            widget.content.coverImageUrl,
+            content.coverImageUrl,
             height: context.height * .28,
           ),
           Container(
@@ -129,7 +130,7 @@ class _ContentPageState extends State<ContentPage>
   List<Widget> contentDetails(BuildContext context) {
     return [
       Text(
-        widget.content.name,
+        content.name,
         style: context.textTheme.headline5!.copyWith(
           fontWeight: FontWeight.w600,
         ),
@@ -138,7 +139,7 @@ class _ContentPageState extends State<ContentPage>
       Row(
         children: [
           Text(
-            widget.content.showContentType,
+            content.showContentType,
             style: context.textTheme.subtitle2,
           ),
           SizedBox(width: 12.sp),
@@ -150,34 +151,23 @@ class _ContentPageState extends State<ContentPage>
           SizedBox(width: 8.sp),
           const SmartSign(),
           SizedBox(width: 8.sp),
-          if (widget.content.imdbScore != null) ...[
+          if (content.imdbScore != null) ...[
             Dot(),
             SizedBox(width: 12.sp),
             Text(
-              widget.content.imdbScore!.toString(),
+              content.imdbScore!.toString(),
             ),
           ],
         ],
       ),
       SizedBox(height: 24.sp),
       WatchNowButton(
-        onPressed: () {
-          Content content = Content.temp();
-          content.addParts([
-            ContentPart.temp(),
-          ]);
-          NavigationService.pushNamed(
-            PlayerPage.path,
-            arguments: PlayerPageArguments(
-              content: content,
-              selectedContentIndex: 1,
-            ),
-          );
-        },
-      ), //TODO:yönlendirme eklenecek
+        isLoading: context.watch<ContentViewModel>().isLoadingParts,
+        onPressed: () => watchNowTapped(context),
+      ),
       SizedBox(height: 20.sp),
       Text(
-        widget.content.explanation,
+        content.explanation,
         style: context.textTheme.caption!.copyWith(
           color: Colors.white54,
           fontWeight: FontWeight.w400,
@@ -186,7 +176,7 @@ class _ContentPageState extends State<ContentPage>
       ),
       SizedBox(height: 16.sp),
       Text(
-        widget.content.showContentType,
+        content.showContentType,
         style: context.textTheme.caption!.copyWith(
           color: Colors.white54,
           fontWeight: FontWeight.w400,
@@ -195,7 +185,7 @@ class _ContentPageState extends State<ContentPage>
       ),
       SizedBox(height: 2.sp),
       Text(
-        'Tür:', //TODO:tür eklenecek
+        'Tür: Bilinmiyor', //TODO:tür eklenecek
         style: context.textTheme.caption!.copyWith(
           color: Colors.white54,
           fontWeight: FontWeight.w400,
@@ -220,6 +210,24 @@ class _ContentPageState extends State<ContentPage>
           onTap: () {}, //TODO:eklenecek
         ),
       ],
+    );
+  }
+
+  ListView contentPartsField(BuildContext context) {
+    final contentPartList = context.read<ContentViewModel>().contentPartList;
+    return ListView.separated(
+      padding: EdgeInsets.only(bottom: context.bottomPadding + 36.sp),
+      separatorBuilder: (context, index) => SizedBox(height: 32.sp),
+      shrinkWrap: true,
+      itemCount: contentPartList?.length ?? 0,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return ContentPartItem(
+          onTap: () => watchNowTapped(context, index),
+          content: content,
+          contentPart: contentPartList![index],
+        );
+      },
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:gain_clone/constants/app_constants.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
+import 'package:gain_clone/init/enums/content_type.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
+import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:gain_clone/presentation/components/other/content_type_horizontal_list.dart';
 import 'package:gain_clone/presentation/components/other/recommended_contents_slider.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_types_tabbar.dart';
@@ -11,39 +11,10 @@ import 'package:gain_clone/presentation/pages/home/content/content_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/main/main_view_model.dart';
 import 'package:provider/provider.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
-  late final TabController tabController;
-  final List<Content> contentList = [
-    Content.temp(),
-    Content.temp(),
-    Content.temp(),
-  ];
-  @override
-  void initState() {
-    tabController =
-        TabController(length: AppConstants.instance.tabs.length, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  void exp(BuildContext context) {
-    context.read<MainViewModel>().getContents();
-  }
-
-  void pushContentPage(Content content) {
+  void pushContentPage(BuildContext context, {required Content content}) {
     NavigationService.pushWithModalBottomSheet(
       context,
       ContentPage(content: content),
@@ -53,55 +24,68 @@ class _MainPageState extends State<MainPage>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => MainViewModel(tabController),
+      create: (context) => MainViewModel(),
       builder: (context, _) {
-        return Scaffold(
-          body: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              _recommendeds(),
-              SizedBox(height: 8.sp),
-              _tabbarForContentTypes(),
-              ElevatedButton(
-                onPressed: () => exp(context),
-                child: Text('data'),
-              ),
-              SizedBox(height: 16.sp),
-              ContentTypeHorizontalList(
-                headerText: 'Öne Çıkanlar',
-                contentList: contentList,
-                onTapCallBack: (index) => pushContentPage(contentList[index]),
-              ),
-              SizedBox(height: 24.sp),
-              ContentTypeHorizontalList(
-                headerText: 'Ücretsiz Başla',
-                contentList: contentList,
-                onTapCallBack: (index) => pushContentPage(contentList[index]),
-              ),
-              SizedBox(height: 24.sp),
-              ContentTypeHorizontalList(
-                headerText: 'GAİN Orijinal Komediler',
-                contentList: contentList,
-                onTapCallBack: (index) => pushContentPage(contentList[index]),
-              ),
-              SizedBox(height: context.bottomPadding + 96.h)
-            ],
+        return DefaultTabController(
+          length: getContentTypes.length,
+          child: Scaffold(
+            body: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                _recommendeds(context),
+                SizedBox(height: 8.sp),
+                _tabbarForContentTypes(context),
+                SizedBox(height: 16.sp),
+                if (context.read<MainViewModel>().isLoadingBody)
+                  const AppLinearProgressIndicator()
+                else
+                  ListView.separated(
+                    padding: EdgeInsets.zero,
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 24.sp),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: context
+                            .read<MainViewModel>()
+                            .contentHeaderList
+                            ?.length ??
+                        0,
+                    itemBuilder: (context, index) {
+                      final oneContentHeader = context
+                          .read<MainViewModel>()
+                          .contentHeaderList![index];
+                      return ContentTypeHorizontalList(
+                        headerText: oneContentHeader.name,
+                        contentList: oneContentHeader.contentList!,
+                        onTapCallBack: (index) => pushContentPage(
+                          context,
+                          content: oneContentHeader.contentList![index],
+                        ),
+                      );
+                    },
+                  ),
+                SizedBox(height: context.bottomPadding + 96.h)
+              ],
+            ),
           ),
         );
       },
     );
   }
 
-  RecommendedContentsSlider _recommendeds() {
+  RecommendedContentsSlider _recommendeds(BuildContext context) {
+    final contentList =
+        context.watch<MainViewModel>().contentHeaderList?[0].contentList;
     return RecommendedContentsSlider(
       contents: contentList,
       onTapCallBack: (index) => pushContentPage(
-        contentList[index],
+        context,
+        content: contentList![index],
       ),
     );
   }
 
-  Theme _tabbarForContentTypes() {
+  Theme _tabbarForContentTypes(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
         highlightColor: Colors.transparent,
@@ -109,8 +93,8 @@ class _MainPageState extends State<MainPage>
       ),
       child: ContentTypesTabbar(
         context: context,
-        controller: tabController,
-        tabs: AppConstants.instance.tabs,
+        tabs: getContentTypes,
+        onTap: context.read<MainViewModel>().onTap,
       ),
     );
   }

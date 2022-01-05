@@ -7,13 +7,18 @@ import 'package:gain_clone/presentation/components/other/network_image_with_shim
 class ContentPartItem extends StatelessWidget {
   final Content content;
   final ContentPart contentPart;
-  const ContentPartItem(
-      {Key? key, required this.content, required this.contentPart})
-      : super(key: key);
+  final VoidCallback onTap;
+  const ContentPartItem({
+    Key? key,
+    required this.content,
+    required this.contentPart,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       contentPadding: EdgeInsets.zero,
       leading: SizedBox(
         height: context.width * 0.25,
@@ -37,7 +42,7 @@ class ContentPartItem extends StatelessWidget {
                 ),
                 width: context.width * 0.3,
                 child: Text(
-                  contentPart.showOnlyPartOrName,
+                  contentPart.showPartNoAndNameForCover,
                   style: context.textTheme.caption,
                   textAlign: TextAlign.center,
                 ),
@@ -47,8 +52,7 @@ class ContentPartItem extends StatelessWidget {
         ),
       ),
       title: Text(
-        '${content.name}${contentPart.showPartNoAndName}', //TODO:TAM DOĞRU DEĞİL
-
+        '${content.name}${contentPart.showPartNoAndName}',
         style: context.textTheme.subtitle2!,
       ),
       subtitle: Text(

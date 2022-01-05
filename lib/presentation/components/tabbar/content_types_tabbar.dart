@@ -7,11 +7,13 @@ class ContentTypesTabbar extends TabBar {
     required final BuildContext context,
     final TabController? controller,
     required final List<String> tabs,
+    void Function(int)? onTap,
   }) : super(
           key: key,
           labelPadding: context.paddingHorizontal12x,
           tabs: tabs.map((tab) => Tab(text: tab)).toList(),
           controller: controller,
+          onTap: onTap,
           unselectedLabelColor: Colors.white54,
           labelStyle: context.textTheme.subtitle1!.copyWith(
             fontWeight: FontWeight.w700,

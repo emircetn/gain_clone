@@ -12,7 +12,7 @@ import 'package:gain_clone/presentation/pages/home/navigation_pages/profile/prof
 import 'package:gain_clone/products/widgets/user_avatar.dart';
 import 'package:gain_clone/presentation/components/user/user_info_tile.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page.dart';
-import 'package:gain_clone/presentation/pages/home/webview_page.dart';
+import 'package:gain_clone/presentation/pages/home/webview/webview_page.dart';
 import 'package:gain_clone/utils/app_validators.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -274,7 +274,7 @@ class ProfilePage extends StatelessWidget {
       ),
       AppDivider(),
       AppListTile(
-        onTap: () {}, //TODO: Çıkış yapacak
+        onTap: () {}, //TODO: Çıkış yapılacak ve auth sayfaları eklenecek
         leading: Text(
           'Çıkış Yap',
           style: context.textTheme.caption!.copyWith(
@@ -285,7 +285,7 @@ class ProfilePage extends StatelessWidget {
       ),
       AppDivider(),
       AppListTile(
-        onTap: () {}, //TODO: Hesabını silecek
+        onTap: () {}, //TODO: Hesap silme ekranı eklenecek
         leading: Text(
           'Hesabını Sil',
           style: context.textTheme.caption!.copyWith(
