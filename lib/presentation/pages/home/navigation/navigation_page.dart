@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_item_model.dart';
 import 'package:gain_clone/presentation/components/bottom_navigation_bar/app_bottom_navigation_bar.dart';
-import 'package:gain_clone/presentation/components/other/keep_alive_page.dart';
+import 'package:gain_clone/presentation/components/pages/keep_alive_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation/navigation_view_model.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/dowloads/downloads_page.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/main/main_page.dart';
@@ -36,7 +36,9 @@ class NavigationPage extends StatelessWidget {
     const AppBottomNavigationBarItemModel(
       text: 'Profil',
       icon: PhosphorIcons.user,
-      page: ProfilePage(),
+      page: KeepAlivePage(
+        child: ProfilePage(),
+      ),
     ),
   ];
 
@@ -47,10 +49,15 @@ class NavigationPage extends StatelessWidget {
       body: ChangeNotifierProvider(
         create: (context) => NavigationViewModel(),
         child: Consumer<NavigationViewModel>(
-          builder: (context, bavigationViewModel, child) => Stack(
+          builder: (context, navigationViewModel, child) => Stack(
             children: [
-              _tabItems[bavigationViewModel.currentTab].page,
-              bottomNavigationBar(context, bavigationViewModel.currentTab)
+              PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: navigationViewModel.pageController,
+                children: _tabItems.map((e) => e.page).toList(),
+              ),
+              // _tabItems[bavigationViewModel.currentTab].page,
+              bottomNavigationBar(context, navigationViewModel.currentTab)
             ],
           ),
         ),

@@ -3,7 +3,7 @@ import 'package:gain_clone/constants/app_constants.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/presentation/components/buttons/mini_watch_now_button.dart';
-import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
+import 'package:gain_clone/presentation/components/images/network_image_with_shimmer.dart';
 
 class BigecommendedContentItem extends StatelessWidget {
   final Content content;

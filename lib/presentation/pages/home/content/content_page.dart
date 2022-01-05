@@ -12,7 +12,7 @@ import 'package:gain_clone/presentation/components/divider/app_divider.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:gain_clone/presentation/components/items/content_part_item.dart';
 import 'package:gain_clone/presentation/components/other/dot.dart';
-import 'package:gain_clone/presentation/components/other/network_image_with_shimmer.dart';
+import 'package:gain_clone/presentation/components/images/network_image_with_shimmer.dart';
 import 'package:gain_clone/presentation/components/other/smart_sign.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_page_tabbar.dart';
 import 'package:gain_clone/presentation/pages/home/content/content_view_model.dart';
