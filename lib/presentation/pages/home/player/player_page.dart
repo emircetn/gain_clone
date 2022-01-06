@@ -89,6 +89,7 @@ class PlayerPage extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: SecondsDisplayWidget(
+                //TODO:widget yazılcak
                 seconds: playerViewModel.defaultSeconds.inSeconds,
                 isForward: true,
                 isVisible: true,

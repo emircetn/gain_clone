@@ -32,7 +32,7 @@ class ContentPage extends StatelessWidget {
       PlayerPage.path,
       arguments: PlayerPageArguments(
         content: content,
-        partList: contextPartList, //tek part agöre güncellenecek
+        partList: contextPartList, //TODO:tek parta göre güncellenecek
         selectedContentIndex: partIndex,
       ),
     );
