@@ -7,6 +7,7 @@ import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/presentation/components/buttons/player_icon_button.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
+import 'package:gain_clone/presentation/components/other/seconds_display_widget.dart';
 import 'package:gain_clone/presentation/components/sliders/player_slider.dart';
 import 'package:gain_clone/presentation/pages/home/player/player_view_model.dart';
 import 'package:provider/provider.dart';
@@ -46,25 +47,56 @@ class PlayerPage extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: playerViewModel.openOrCloseMediaDetailsField,
-              child: Scaffold(
-                body: PageView.builder(
-                  controller: playerViewModel.pageController,
-                  onPageChanged: (value) =>
-                      playerViewModel.onPageChanged(value),
-                  itemCount: args.partList.length,
-                  itemBuilder: (context, index) => Stack(
-                    children: [
-                      _videoField(context, index), //video alanı
-                      _contentDetailsAndButtonsField(context,
-                          index), //video detaylar, slider, butonları iceren alan
-                    ],
+              child: Stack(
+                children: [
+                  Scaffold(
+                    body: PageView.builder(
+                      controller: playerViewModel.pageController,
+                      onPageChanged: (value) =>
+                          playerViewModel.onPageChanged(value),
+                      itemCount: args.partList.length,
+                      itemBuilder: (context, index) => Stack(
+                        children: [
+                          _videoField(context, index), //video alanı
+                          _contentDetailsAndButtonsField(context,
+                              index), //video detaylar, slider, butonları iceren alan
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  tapField(context)
+                ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Row tapField(BuildContext context) {
+    final playerViewModel = context.read<PlayerViewModel>();
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onDoubleTap: () => playerViewModel.seekToBackTapped(),
+          ),
+        ),
+        Expanded(
+          child: GestureDetector(
+            onDoubleTap: () => playerViewModel.seekToForwardTapped(),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: SecondsDisplayWidget(
+                seconds: playerViewModel.defaultSeconds.inSeconds,
+                isForward: true,
+                isVisible: true,
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 

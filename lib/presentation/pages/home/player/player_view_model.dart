@@ -14,7 +14,7 @@ class PlayerViewModel extends ChangeNotifier {
   bool isPlaying = false;
   bool? isInitializeWaiting1;
   bool? isInitializeWaiting2;
-
+  final Duration defaultSeconds = const Duration(seconds: 1);
   bool isContentDetailsAndButtonsFieldShow = false;
 
   final PlayerPageArguments args;
@@ -27,6 +27,9 @@ class PlayerViewModel extends ChangeNotifier {
   VideoPlayerController? get videoPlayerController => isEven(_currentPartIndex)
       ? videoPlayerController1
       : videoPlayerController2;
+
+  bool? get isInitializeWaiting =>
+      isEven(_currentPartIndex) ? isInitializeWaiting1 : isInitializeWaiting2;
 
   bool isEven(int index) => index % 2 == 0;
 
@@ -114,7 +117,7 @@ class PlayerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future playOrPauseVideo() async {
+  Future<void> playOrPauseVideo() async {
     if (videoPlayerController!.value.isInitialized == true) {
       //videoPlayerController getter ilgili videoPlayerController'ı çağırır ve işlem o controller ile yapılır
       if (videoPlayerController!.value.isPlaying == true) {
@@ -138,6 +141,26 @@ class PlayerViewModel extends ChangeNotifier {
         videoPlayerController?.value.position;
     _currentPartIndex = value;
     initAndListenTheVideo(value);
+  }
+
+  Future<void> seekToBackTapped() async {
+    if (videoPlayerController != null &&
+        isInitializeWaiting != true &&
+        videoPlayerController!.value.position - defaultSeconds >
+            Duration.zero) {
+      await videoPlayerController!
+          .seekTo(videoPlayerController!.value.position - defaultSeconds);
+    }
+  }
+
+  Future<void> seekToForwardTapped() async {
+    if (videoPlayerController != null &&
+        isInitializeWaiting != true &&
+        videoPlayerController!.value.position + defaultSeconds <
+            videoPlayerController!.value.duration) {
+      await videoPlayerController!
+          .seekTo(videoPlayerController!.value.position + defaultSeconds);
+    }
   }
 
   void setAllOrientation() {
