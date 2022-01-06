@@ -7,6 +7,7 @@ class NavigationViewModel extends ChangeNotifier {
   NavigationViewModel() {
     pageController = PageController(initialPage: currentTab);
   }
+
   @override
   void dispose() {
     pageController.dispose();

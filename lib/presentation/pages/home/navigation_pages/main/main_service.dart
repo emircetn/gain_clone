@@ -14,18 +14,30 @@ class MainService {
   MainService._init();
   final NetworkManager _networkManager = NetworkManager.instance;
 
-  Future<List<ContentHeader>?> getContentsHeaders() async {
+  Future<ContentHeader?> getContentsHeaders() async {
     try {
       final response = await _networkManager.dio.get(
         ServicePath.contentHeaders.rawValue.toJson,
       );
 
       if (response.statusCode == HttpStatus.ok) {
-        final contentHeaderList = (response.data as List)
-            .map((e) => ContentHeader.fromMap(e as Map<String, dynamic>))
-            .toList()
-            .cast<ContentHeader>();
-        return contentHeaderList;
+        final contentHeader =
+            ContentHeader.fromMap(response.data as Map<String, dynamic>);
+        for (int contentBucketListIndex = 0;
+            contentBucketListIndex < contentHeader.contentBucketList.length;
+            contentBucketListIndex++) {
+          final contentList = <Content>[];
+          for (var contentID in contentHeader
+              .contentBucketList[contentBucketListIndex].contentIDs) {
+            final content = await getContent(contentID);
+            if (content != null) {
+              contentList.add(content);
+            }
+          }
+          contentHeader.contentBucketList[contentBucketListIndex].contentList =
+              contentList;
+        }
+        return contentHeader;
       }
     } catch (e) {
       debugPrint('getContentsHeaders error: ' + e.toString());
@@ -57,6 +69,30 @@ class MainService {
 
       if (response.statusCode == HttpStatus.ok) {
         return Content.fromMap(response.data);
+      }
+    } catch (e) {
+      debugPrint('getContent error: ' + e.toString());
+      return null;
+    }
+  }
+
+  Future<List<Content>?> getBannerContents() async {
+    try {
+      final response =
+          await _networkManager.dio.get(ServicePath.banners.rawValue.toJson);
+
+      if (response.statusCode == HttpStatus.ok) {
+        final contentIDList = response.data['contentIDs'];
+        if (contentIDList != null) {
+          final List<Content> contentList = [];
+          for (int oneContentID in contentIDList) {
+            final content = await getContent(oneContentID);
+            if (content != null) {
+              contentList.add(content);
+            }
+          }
+          return contentList;
+        }
       }
     } catch (e) {
       debugPrint('getContent error: ' + e.toString());

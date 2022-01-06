@@ -4,7 +4,7 @@ import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/enums/content_type.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
-import 'package:gain_clone/presentation/components/other/content_type_horizontal_list.dart';
+import 'package:gain_clone/presentation/components/other/content_bucket_listview.dart';
 import 'package:gain_clone/presentation/components/other/recommended_contents_slider.dart';
 import 'package:gain_clone/presentation/components/tabbar/content_types_tabbar.dart';
 import 'package:gain_clone/presentation/pages/home/content/content_page.dart';
@@ -39,31 +39,7 @@ class MainPage extends StatelessWidget {
                 if (context.read<MainViewModel>().isLoadingBody)
                   const AppLinearProgressIndicator()
                 else
-                  ListView.separated(
-                    padding: EdgeInsets.zero,
-                    separatorBuilder: (context, index) =>
-                        SizedBox(height: 24.sp),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: context
-                            .read<MainViewModel>()
-                            .contentHeaderList
-                            ?.length ??
-                        0,
-                    itemBuilder: (context, index) {
-                      final oneContentHeader = context
-                          .read<MainViewModel>()
-                          .contentHeaderList![index];
-                      return ContentTypeHorizontalList(
-                        headerText: oneContentHeader.name,
-                        contentList: oneContentHeader.contentList!,
-                        onTapCallBack: (index) => pushContentPage(
-                          context,
-                          content: oneContentHeader.contentList![index],
-                        ),
-                      );
-                    },
-                  ),
+                  contentBucketListField(context, 0),
                 SizedBox(height: context.bottomPadding + 96.h)
               ],
             ),
@@ -73,14 +49,36 @@ class MainPage extends StatelessWidget {
     );
   }
 
+  ListView contentBucketListField(BuildContext context, int index) {
+    final contentBucketList =
+        context.read<MainViewModel>().contentHeader?.contentBucketList;
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      separatorBuilder: (context, index) => SizedBox(height: 24.sp),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: contentBucketList?.length ?? 0,
+      itemBuilder: (context, index) {
+        final oneBucket = contentBucketList![index];
+        return ContentBucketListview(
+          headerText: oneBucket.name,
+          contentList: oneBucket.contentList!,
+          onTapCallBack: (index) => pushContentPage(
+            context,
+            content: oneBucket.contentList![index],
+          ),
+        );
+      },
+    );
+  }
+
   RecommendedContentsSlider _recommendeds(BuildContext context) {
-    final contentList =
-        context.watch<MainViewModel>().contentHeaderList?[0].contentList;
+    final bannerContents = context.watch<MainViewModel>().bannerContents;
     return RecommendedContentsSlider(
-      contents: contentList,
+      contents: bannerContents,
       onTapCallBack: (index) => pushContentPage(
         context,
-        content: contentList![index],
+        content: bannerContents![index],
       ),
     );
   }

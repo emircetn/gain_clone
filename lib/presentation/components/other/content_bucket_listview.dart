@@ -3,12 +3,12 @@ import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/presentation/components/images/network_image_with_shimmer.dart';
 
-class ContentTypeHorizontalList extends StatelessWidget {
+class ContentBucketListview extends StatelessWidget {
   final String headerText;
   final List<Content> contentList;
   final void Function(int) onTapCallBack;
 
-  const ContentTypeHorizontalList({
+  const ContentBucketListview({
     Key? key,
     required this.headerText,
     required this.contentList,
