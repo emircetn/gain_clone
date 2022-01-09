@@ -30,7 +30,7 @@ class Content {
     this.imdbScore,
   });
 
-  static List<String> get getContentTypes => [
+  static List<String> get getContentTypeNames => [
         ContentType.actual.rawValue,
         ContentType.series.rawValue,
         ContentType.movie.rawValue,

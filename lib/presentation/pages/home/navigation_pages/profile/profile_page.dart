@@ -40,16 +40,16 @@ class ProfilePage extends StatelessWidget {
     NavigationService.pushNamed(
       UserInformationUpdatePage.path,
       arguments: UserInformationUpdatePageArguments(
-          text: 'Doğum tarihini güncelle',
-          initialValue: brithday,
-          validatorFunction: (newBrithday, lastBrithday) =>
-              AppValidators.instance.brithdayCheck(newBrithday, lastBrithday),
-          buttonCallBack: (newValue) => context
-              .read<ProfileViewModel>()
-              .updateBrithday(context, newValue),
-          inputFormatters: [
-            MaskTextInputFormatter(mask: "##/##/####"),
-          ]),
+        text: 'Doğum tarihini güncelle',
+        initialValue: brithday,
+        validatorFunction: (newBrithday, lastBrithday) =>
+            AppValidators.instance.brithdayCheck(newBrithday, lastBrithday),
+        buttonCallBack: (newValue) =>
+            context.read<ProfileViewModel>().updateBrithday(context, newValue),
+        inputFormatters: [
+          MaskTextInputFormatter(mask: "##/##/####"),
+        ],
+      ),
     );
   }
 

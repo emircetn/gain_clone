@@ -1,31 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/data/models/user.dart';
 import 'package:gain_clone/managers/user_manager.dart';
+import 'package:gain_clone/presentation/pages/home/navigation_pages/profile/profile_service.dart';
 import 'package:gain_clone/utils/app_functions.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ProfileViewModel extends ChangeNotifier {
+  ProfileService profileService = ProfileService.instance;
+
   Future<bool> updateNameAndSurname(
       BuildContext context, String newValue) async {
-    //TODO:servis eklenecek
-    await Future.delayed(const Duration(seconds: 1));
-    context.read<UserManager>().setUser = User.temp(nameAndSurname: newValue);
-    return true;
+    final result = await profileService.updateNameAndSurname();
+    if (result == true) {
+      final userManager = context.read<UserManager>();
+      userManager.setUser = userManager.user!.copyWith(
+        nameAndSurname: newValue,
+      );
+    }
+
+    return result;
   }
 
   Future<bool> updateBrithday(BuildContext context, String newValue) async {
-    await Future.delayed(const Duration(seconds: 1));
-    //TODO:servis eklenecek
-    context.read<UserManager>().setUser =
-        User.temp(brithday: DateFormat('dd/MM/yyy').parse(newValue));
-    return true;
+    DateTime? brithday;
+    try {
+      brithday = DateFormat('dd/MM/yyy').parse(newValue);
+    } catch (e) {
+      return false;
+    }
+    final result = await profileService.updateBrithday();
+    if (result == true) {
+      final userManager = context.read<UserManager>();
+      userManager.setUser = userManager.user!.copyWith(
+        brithday: brithday,
+      );
+    }
+
+    return result;
   }
 
-  void changeEMessagePermission(BuildContext context, bool value) {
-    context.read<UserManager>().setUser =
-        User.temp(isHaveEMessagePermission: value);
-    //TODO:Dbye yazılmalı
+  Future<void> changeEMessagePermission(
+      BuildContext context, bool value) async {
+    final userManager = context.read<UserManager>();
+    userManager.setUser = userManager.user!.copyWith(
+      isHaveEMessagePermission: value,
+    );
     if (value) {
       AppFunctions.showSnackBar(
         context: context,
@@ -40,10 +60,27 @@ class ProfileViewModel extends ChangeNotifier {
         isSuccess: false,
       );
     }
+
+    final result = await profileService.changeEMessagePermission();
+    if (result == false) {
+      userManager.setUser = userManager.user!.copyWith(
+        isHaveEMessagePermission: !value,
+      );
+    }
   }
 
-  void changeIsOpenDataSavingMode(BuildContext context, bool value) {
-    context.read<UserManager>().setUser =
-        User.temp(isOpenDataSavingMode: value);
+  Future<void> changeIsOpenDataSavingMode(
+      BuildContext context, bool value) async {
+    final userManager = context.read<UserManager>();
+    userManager.setUser = userManager.user!.copyWith(
+      isOpenDataSavingMode: value,
+    );
+
+    final result = await profileService.changeIsOpenDataSavingMode();
+    if (result == false) {
+      userManager.setUser = userManager.user!.copyWith(
+        isOpenDataSavingMode: !value,
+      );
+    }
   }
 }

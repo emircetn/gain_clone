@@ -19,10 +19,3 @@ extension ContentTypeExtension on ContentType {
     }
   }
 }
-
-List<String> get getContentTypes => [
-      ContentType.actual.rawValue,
-      ContentType.series.rawValue,
-      ContentType.movie.rawValue,
-      ContentType.program.rawValue,
-    ];

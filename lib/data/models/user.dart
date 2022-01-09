@@ -1,5 +1,6 @@
-import 'package:gain_clone/constants/app_constants.dart';
 import 'package:intl/intl.dart';
+
+import 'package:gain_clone/constants/app_constants.dart';
 
 class User {
   final String nameAndSurname;
@@ -38,6 +39,23 @@ class User {
       brithday: brithday ?? DateTime(1998, 23, 4),
       isHaveEMessagePermission: isHaveEMessagePermission,
       isOpenDataSavingMode: isOpenDataSavingMode,
+    );
+  }
+
+  User copyWith({
+    String? nameAndSurname,
+    String? email,
+    DateTime? brithday,
+    bool? isHaveEMessagePermission,
+    bool? isOpenDataSavingMode,
+  }) {
+    return User(
+      nameAndSurname: nameAndSurname ?? this.nameAndSurname,
+      email: email ?? this.email,
+      brithday: brithday ?? this.brithday,
+      isHaveEMessagePermission:
+          isHaveEMessagePermission ?? this.isHaveEMessagePermission,
+      isOpenDataSavingMode: isOpenDataSavingMode ?? this.isOpenDataSavingMode,
     );
   }
 }
