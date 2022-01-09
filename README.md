@@ -1,7 +1,6 @@
 # GAIN CLONE
 
-
 # Screenshots
-![Optional Text](/images/3.png)
-![Optional Text](/images/2.png)
-![Optional Text](/images/1.png)
+<img src="https://github.com/emircetn/gain_clone/blob/master/images/ss3.png" width="200" />|
+<img src="https://github.com/emircetn/gain_clone/blob/master/images/ss1.png" width="200" />|
+<img src="https://github.com/emircetn/gain_clone/blob/master/images/ss2.png" width="200" />|
