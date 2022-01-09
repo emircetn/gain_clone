@@ -12,7 +12,6 @@ class SearchTextFormField extends AppTextFormField {
     final FocusNode? focusNode,
     final Function(String?)? onSaved,
     final Function(String)? onFieldSubmitted,
-    final VoidCallback? searchTapped,
     final Function(String)? onChanged,
     final TextEditingController? controller,
     final IconButton? suffixIcon,
@@ -24,13 +23,10 @@ class SearchTextFormField extends AppTextFormField {
           focusNode: focusNode,
           textInputAction: TextInputAction.search,
           cursorColor: Colors.red,
-          suffixIcon: GestureDetector(
-            onTap: () => searchTapped,
-            child: Icon(
-              PhosphorIcons.magnifying_glass,
-              color: Colors.white60,
-              size: 20.sp,
-            ),
+          suffixIcon: Icon(
+            PhosphorIcons.magnifying_glass,
+            color: Colors.white60,
+            size: 20.sp,
           ),
           hintText: 'Arama',
           onSaved: onSaved,

@@ -17,49 +17,55 @@ class ContentPartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      contentPadding: EdgeInsets.zero,
-      leading: SizedBox(
-        height: context.width * 0.25,
-        width: context.width * 0.3,
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: context.borderRadius8x,
-              child: NetworkImageWithShimmer(
-                contentPart.coverUrl,
-                height: context.width * 0.25,
-                width: context.width * 0.3,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[900]!,
-                  borderRadius: context.borderRadiusOnlyBottom8x,
-                ),
-                width: context.width * 0.3,
-                child: Text(
-                  contentPart.showPartNoAndNameForCover,
-                  style: context.textTheme.caption,
-                  textAlign: TextAlign.center,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: EdgeInsets.zero,
+        leading: SizedBox(
+          height: context.width * 0.25,
+          width: context.width * 0.3,
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: context.borderRadius8x,
+                child: NetworkImageWithShimmer(
+                  contentPart.coverUrl,
+                  height: context.width * 0.25,
+                  width: context.width * 0.3,
                 ),
               ),
-            )
-          ],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900]!,
+                    borderRadius: context.borderRadiusOnlyBottom8x,
+                  ),
+                  width: context.width * 0.3,
+                  child: Text(
+                    contentPart.showPartNoAndNameForCover,
+                    style: context.textTheme.caption,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-      title: Text(
-        '${content.name}${contentPart.showPartNoAndName}',
-        style: context.textTheme.subtitle2!,
-      ),
-      subtitle: Text(
-        contentPart.explanation,
-        maxLines: 3,
-        style: context.textTheme.caption!.copyWith(
-          color: Colors.white54,
+        title: Text(
+          '${content.name}${contentPart.showPartNoAndName}',
+          style: context.textTheme.subtitle2!,
+        ),
+        subtitle: Text(
+          contentPart.explanation,
+          maxLines: 3,
+          style: context.textTheme.caption!.copyWith(
+            color: Colors.white54,
+          ),
         ),
       ),
     );

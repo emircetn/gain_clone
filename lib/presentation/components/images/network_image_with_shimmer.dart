@@ -16,23 +16,21 @@ class NetworkImageWithShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        fit: BoxFit.cover,
-        height: height,
-        width: width,
-        placeholder: (context, url) => Shimmer.fromColors(
-          baseColor: Colors.grey[900]!,
-          highlightColor: Colors.grey[600]!,
-          child: Container(
-            color: Colors.grey[600],
-            height: height,
-            width: width,
-          ),
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      fit: BoxFit.cover,
+      height: height,
+      width: width,
+      placeholder: (context, url) => Shimmer.fromColors(
+        baseColor: Colors.grey[900]!,
+        highlightColor: Colors.grey[600]!,
+        child: Container(
+          color: Colors.grey[600],
+          height: height,
+          width: width,
         ),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }

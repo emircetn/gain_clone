@@ -73,6 +73,13 @@ extension PaddingExtensionOnly on BuildContext {
       EdgeInsets.only(bottom: ScreenUtil().setSp(12));
   EdgeInsets get paddingBottom16x =>
       EdgeInsets.only(bottom: ScreenUtil().setSp(16));
+
+  EdgeInsets get paddingTop1x => EdgeInsets.only(top: ScreenUtil().setSp(1));
+  EdgeInsets get paddingTop2x => EdgeInsets.only(top: ScreenUtil().setSp(2));
+  EdgeInsets get paddingTop4x => EdgeInsets.only(top: ScreenUtil().setSp(4));
+  EdgeInsets get paddingTop8x => EdgeInsets.only(top: ScreenUtil().setSp(8));
+  EdgeInsets get paddingTop12x => EdgeInsets.only(top: ScreenUtil().setSp(12));
+  EdgeInsets get paddingTop16x => EdgeInsets.only(top: ScreenUtil().setSp(16));
 }
 
 extension PaddingExtensionHorizontal on BuildContext {

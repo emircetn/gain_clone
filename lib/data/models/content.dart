@@ -70,4 +70,18 @@ class Content {
       partCount: map['partCount'] ?? 1,
     );
   }
+
+  factory Content.temp() {
+    return Content(
+      name: 'Ayak İşleri',
+      explanation:
+          'Tecrübeli görev adamı Vedat ve felsefe okumuş, politik doğrucu Evren, zengin bir iş adamının ‘aşırı önemli’ ayak işleri için görevlendirilen ikilidir. Biri gözlerini kapayıp vazifesini yapan, diğeri attığı her adımı sorgulayan bu uyumsuz ikili, her bölüm başka bir maceraya doğru yola çıkar. Fakat görev icabı çatıştıklarından daha fazla, kendi içlerinde çatışırlar',
+      contentType: ContentTypes.series,
+      coverImageUrl:
+          'https://m.media-amazon.com/images/M/MV5BZGI0ZTJmY2EtMDI1MS00NWZmLTk2MzQtM2EyN2QzNDcyZTZhXkEyXkFqcGdeQXVyNDg4MjkzNDk@._V1_.jpg',
+      imdbScore: 7.9,
+      id: 0,
+      partCount: 2,
+    );
+  }
 }
