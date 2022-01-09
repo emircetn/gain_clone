@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
-import 'package:gain_clone/init/enums/content_type.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:gain_clone/presentation/components/other/content_bucket_listview.dart';
@@ -27,7 +26,7 @@ class MainPage extends StatelessWidget {
       create: (context) => MainViewModel(),
       builder: (context, _) {
         return DefaultTabController(
-          length: getContentTypes.length,
+          length: Content.getContentTypeNames.length,
           child: Scaffold(
             body: ListView(
               padding: EdgeInsets.zero,
@@ -39,33 +38,10 @@ class MainPage extends StatelessWidget {
                 if (context.read<MainViewModel>().isLoadingBody)
                   const AppLinearProgressIndicator()
                 else
-                  contentBucketListField(context, 0),
+                  _contentBucketListField(context),
                 SizedBox(height: context.bottomPadding + 96.h)
               ],
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  ListView contentBucketListField(BuildContext context, int index) {
-    final contentBucketList =
-        context.read<MainViewModel>().contentHeader?.contentBucketList;
-    return ListView.separated(
-      padding: EdgeInsets.zero,
-      separatorBuilder: (context, index) => SizedBox(height: 24.sp),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: contentBucketList?.length ?? 0,
-      itemBuilder: (context, index) {
-        final oneBucket = contentBucketList![index];
-        return ContentBucketListview(
-          headerText: oneBucket.name,
-          contentList: oneBucket.contentList!,
-          onTapCallBack: (index) => pushContentPage(
-            context,
-            content: oneBucket.contentList![index],
           ),
         );
       },
@@ -91,9 +67,32 @@ class MainPage extends StatelessWidget {
       ),
       child: ContentTypesTabbar(
         context: context,
-        tabs: getContentTypes,
+        tabs: Content.getContentTypeNames,
         onTap: context.read<MainViewModel>().onTap,
       ),
+    );
+  }
+
+  ListView _contentBucketListField(BuildContext context) {
+    final contentBucketList =
+        context.read<MainViewModel>().contentBuckets?.contentBucketList;
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      separatorBuilder: (context, index) => SizedBox(height: 24.sp),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: contentBucketList?.length ?? 0,
+      itemBuilder: (context, index) {
+        final oneBucket = contentBucketList![index];
+        return ContentBucketListview(
+          headerText: oneBucket.name,
+          contentList: oneBucket.contentList!,
+          onTapCallBack: (index) => pushContentPage(
+            context,
+            content: oneBucket.contentList![index],
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:gain_clone/init/enums/content_type.dart';
+
 enum ContentTypes {
   series,
   movie,
@@ -27,6 +29,13 @@ class Content {
     this.videoUrl,
     this.imdbScore,
   });
+
+  static List<String> get getContentTypes => [
+        ContentType.actual.rawValue,
+        ContentType.series.rawValue,
+        ContentType.movie.rawValue,
+        ContentType.program.rawValue,
+      ];
 
   bool get containsOnePart => partCount == 1;
 

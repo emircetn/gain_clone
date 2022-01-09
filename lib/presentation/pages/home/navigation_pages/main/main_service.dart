@@ -12,69 +12,8 @@ class MainService {
   }
 
   MainService._init();
+
   final NetworkManager _networkManager = NetworkManager.instance;
-
-  Future<ContentHeader?> getContentsHeaders() async {
-    try {
-      final response = await _networkManager.dio.get(
-        ServicePath.contentHeaders.rawValue.toJson,
-      );
-
-      if (response.statusCode == HttpStatus.ok) {
-        final contentHeader =
-            ContentHeader.fromMap(response.data as Map<String, dynamic>);
-        for (int contentBucketListIndex = 0;
-            contentBucketListIndex < contentHeader.contentBucketList.length;
-            contentBucketListIndex++) {
-          final contentList = <Content>[];
-          for (var contentID in contentHeader
-              .contentBucketList[contentBucketListIndex].contentIDs) {
-            final content = await getContent(contentID);
-            if (content != null) {
-              contentList.add(content);
-            }
-          }
-          contentHeader.contentBucketList[contentBucketListIndex].contentList =
-              contentList;
-        }
-        return contentHeader;
-      }
-    } catch (e) {
-      debugPrint('getContentsHeaders error: ' + e.toString());
-      return null;
-    }
-  }
-
-  Future<List<Content>?> getHeaderContents(List<int> contentIDList) async {
-    try {
-      final contentList = <Content>[];
-      for (int contentID in contentIDList) {
-        final content = await getContent(contentID);
-        if (content != null) {
-          contentList.add(content);
-        }
-      }
-
-      return contentList;
-    } catch (e) {
-      debugPrint('getContents error: ' + e.toString());
-      return null;
-    }
-  }
-
-  Future<Content?> getContent(int id) async {
-    try {
-      final response = await _networkManager.dio
-          .get('${ServicePath.contents.rawValue}/$id'.toJson);
-
-      if (response.statusCode == HttpStatus.ok) {
-        return Content.fromMap(response.data);
-      }
-    } catch (e) {
-      debugPrint('getContent error: ' + e.toString());
-      return null;
-    }
-  }
 
   Future<List<Content>?> getBannerContents() async {
     try {
@@ -93,6 +32,52 @@ class MainService {
           }
           return contentList;
         }
+      }
+    } catch (e) {
+      debugPrint('getBannerBucket error: ' + e.toString());
+      return null;
+    }
+  }
+
+  Future<ContentHeader?> getAllBuckets() async {
+    try {
+      final response = await _networkManager.dio.get(
+        ServicePath.contentHeaders.rawValue.toJson,
+      );
+
+      if (response.statusCode == HttpStatus.ok) {
+        final contentHeader =
+            ContentHeader.fromMap(response.data as Map<String, dynamic>);
+
+        for (int index = 0;
+            index < contentHeader.contentBucketList.length;
+            index++) {
+          final contentList = <Content>[];
+          for (var contentID
+              in contentHeader.contentBucketList[index].contentIDs) {
+            final content = await getContent(contentID);
+            if (content != null) {
+              contentList.add(content);
+            }
+          }
+
+          contentHeader.contentBucketList[index].contentList = contentList;
+        }
+        return contentHeader;
+      }
+    } catch (e) {
+      debugPrint('getAllContentsBuckets error: ' + e.toString());
+      return null;
+    }
+  }
+
+  Future<Content?> getContent(int id) async {
+    try {
+      final response = await _networkManager.dio
+          .get('${ServicePath.contents.rawValue}/$id'.toJson);
+
+      if (response.statusCode == HttpStatus.ok) {
+        return Content.fromMap(response.data);
       }
     } catch (e) {
       debugPrint('getContent error: ' + e.toString());
