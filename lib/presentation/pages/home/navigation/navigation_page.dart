@@ -26,7 +26,9 @@ class NavigationPage extends StatelessWidget {
     const AppBottomNavigationBarItemModel(
       text: 'Arama',
       icon: PhosphorIcons.magnifying_glass,
-      page: SearchPage(),
+      page: KeepAlivePage(
+        child: SearchPage(),
+      ),
     ),
     const AppBottomNavigationBarItemModel(
       text: 'İndirilenler',
@@ -56,7 +58,6 @@ class NavigationPage extends StatelessWidget {
                 controller: navigationViewModel.pageController,
                 children: _tabItems.map((e) => e.page).toList(),
               ),
-              // _tabItems[bavigationViewModel.currentTab].page,
               bottomNavigationBar(context, navigationViewModel.currentTab)
             ],
           ),

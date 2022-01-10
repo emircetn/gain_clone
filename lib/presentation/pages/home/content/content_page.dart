@@ -1,12 +1,17 @@
+import 'dart:developer';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/app_constants.dart';
+import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 
 import 'package:gain_clone/presentation/components/buttons/circle_icon_button.dart';
+import 'package:gain_clone/presentation/components/buttons/score_button.dart';
 import 'package:gain_clone/presentation/components/buttons/watch_now_button.dart';
 import 'package:gain_clone/presentation/components/divider/app_divider.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
@@ -18,6 +23,7 @@ import 'package:gain_clone/presentation/components/tabbar/content_page_tabbar.da
 import 'package:gain_clone/presentation/pages/home/content/content_view_model.dart';
 import 'package:gain_clone/presentation/pages/home/player/player_page.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 class ContentPage extends StatelessWidget {
   final Content content;
@@ -36,6 +42,46 @@ class ContentPage extends StatelessWidget {
         selectedContentIndex: partIndex,
       ),
     );
+  }
+
+  void shareTapped() {
+    Share.share('www.gain.com/${content.id}');
+  }
+
+  void scoreButtonTapped(BuildContext context) {
+    final contentViewModel = context.read<ContentViewModel>();
+    if (contentViewModel.isLike != null) {
+      context.read<ContentViewModel>().isLikeUpdated(null);
+      return;
+    }
+    Rect? rect = contentViewModel.scoreButtonKey.globalPaintBounds;
+    if (rect != null) {
+      showDialog(
+        //sınıfa alınırsa iyi olur
+        useSafeArea: false,
+        context: context,
+        builder: (ctx) {
+          return GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Stack(
+              children: [
+                BackdropFilter(
+                  child: Container(color: Colors.black26),
+                  filter: ImageFilter.blur(sigmaY: 2, sigmaX: 2),
+                ),
+                ScoreButtons(
+                  iconData: Icons.close,
+                  closeButtonTapped: () => Navigator.pop(context),
+                  likeOrDisLikeTapped:
+                      context.read<ContentViewModel>().isLikeUpdated,
+                  centerItemRect: rect,
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
   }
 
   List<String> get tabHeaders => const ['Bölümler', 'Benzer İçerikler'];
@@ -69,7 +115,7 @@ class ContentPage extends StatelessWidget {
             children: [
               ...contentDetails(context),
               SizedBox(height: 12.sp),
-              buttonsField(),
+              buttonsField(context),
               SizedBox(height: 32.sp),
               if (context.watch<ContentViewModel>().isLoadingParts)
                 const AppLinearProgressIndicator()
@@ -84,7 +130,7 @@ class ContentPage extends StatelessWidget {
               ],
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -195,19 +241,40 @@ class ContentPage extends StatelessWidget {
     ];
   }
 
-  Widget buttonsField() {
+  Widget buttonsField(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CircleIconButton(
           iconData: Icons.reply_sharp,
           text: 'Paylaş',
-          onTap: () {}, //TODO:eklenecek
+          onTap: shareTapped,
         ),
-        CircleIconButton(
-          iconData: PhosphorIcons.thumbs_up,
-          text: 'Puanla',
-          onTap: () {}, //TODO:eklenecek
+        Consumer<ContentViewModel>(
+          builder: (context, contentViewModel, _) {
+            if (contentViewModel.isLike == null) {
+              return CircleIconButton(
+                key: contentViewModel.scoreButtonKey,
+                iconData: PhosphorIcons.thumbs_up,
+                text: 'Puanla',
+                onTap: () => scoreButtonTapped(context),
+              );
+            } else if (contentViewModel.isLike == true) {
+              return CircleIconButton(
+                key: contentViewModel.scoreButtonKey,
+                iconData: PhosphorIcons.thumbs_up_fill,
+                buttonColor: Colors.red,
+                text: 'Beğendim',
+                onTap: () => scoreButtonTapped(context),
+              );
+            }
+            return CircleIconButton(
+              key: contentViewModel.scoreButtonKey,
+              iconData: PhosphorIcons.thumbs_down_fill,
+              text: 'Beğenmedim',
+              onTap: () => scoreButtonTapped(context),
+            );
+          },
         ),
       ],
     );

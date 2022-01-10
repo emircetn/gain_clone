@@ -18,7 +18,7 @@ class MainService {
   Future<List<Content>?> getBannerContents() async {
     try {
       final response =
-          await _networkManager.dio.get(ServicePath.banners.rawValue.toJson);
+          await _networkManager.dio.get(ServicePath.banner.rawValue.toJson);
 
       if (response.statusCode == HttpStatus.ok) {
         final contentIDList = response.data['contentIDs'];

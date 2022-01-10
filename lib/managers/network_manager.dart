@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-enum ServicePath { contents, banners, contentHeaders, contentParts }
+enum ServicePath { contents, banner, contentHeaders, contentParts }
 
 class NetworkManager {
   static NetworkManager? _instace;
@@ -27,7 +27,7 @@ extension ServicePathExtension on ServicePath {
         return '/contentHeaders';
       case ServicePath.contentParts:
         return '/contentParts';
-      case ServicePath.banners:
+      case ServicePath.banner:
         return '/banner';
     }
   }

@@ -9,6 +9,9 @@ class ContentViewModel extends ChangeNotifier {
   bool isLoadingParts = true;
   List<ContentPart>? contentPartList;
   final Content content;
+  final GlobalKey scoreButtonKey = GlobalKey();
+  bool isScoreState = false;
+  bool? isLike;
 
   ContentViewModel(this.content) {
     initialize();
@@ -24,6 +27,30 @@ class ContentViewModel extends ChangeNotifier {
     } else {
       isLoadingParts = false;
       notifyListeners();
+    }
+  }
+
+  void scoreStateUpdate() {
+    isScoreState = !isScoreState;
+    notifyListeners();
+  }
+
+  void isLikeUpdated(bool? like) {
+    isLike = like;
+    notifyListeners();
+  }
+}
+
+//https://stackoverflow.com/a/58788092/15047718
+extension GlobalKeyExtension on GlobalKey {
+  Rect? get globalPaintBounds {
+    final renderObject = currentContext?.findRenderObject();
+    final translation = renderObject?.getTransformTo(null).getTranslation();
+    if (translation != null && renderObject?.paintBounds != null) {
+      final offset = Offset(translation.x, translation.y);
+      return renderObject!.paintBounds.shift(offset);
+    } else {
+      return null;
     }
   }
 }

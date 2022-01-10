@@ -60,7 +60,7 @@ class SearchPage extends StatelessWidget {
                       context, searchViewModel.popularContentParts)
                 else if (searchViewModel.foundedContents == null ||
                     searchViewModel.foundedContents!.isEmpty)
-                  showNotFoundContentText(context, searchViewModel.searchedText)
+                  showNotFoundContentText(context, searchViewModel.searchText)
                 else
                   showFoundContents(context, searchViewModel.foundedContents!)
               ],
@@ -103,12 +103,12 @@ class SearchPage extends StatelessWidget {
     );
   }
 
-  Widget showNotFoundContentText(BuildContext context, String searchedText) {
+  Widget showNotFoundContentText(BuildContext context, String searchText) {
     return Text.rich(
       TextSpan(
         children: [
           TextSpan(
-            text: '"$searchedText"',
+            text: '"$searchText"',
             style: context.textTheme.bodyText1,
           ),
           TextSpan(

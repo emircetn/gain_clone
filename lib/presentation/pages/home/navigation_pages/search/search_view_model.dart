@@ -9,10 +9,10 @@ class SearchViewModel extends ChangeNotifier {
   List<Content>? foundedContents;
   List<ContentPart>? popularContentParts;
 
-  String searchedText = '';
+  String searchText = '';
   bool isLoading = true;
 
-  bool get isInitialState => searchedText.isEmpty;
+  bool get isInitialState => searchText.isEmpty;
 
   SearchViewModel() {
     getPopularContentParts();
@@ -24,16 +24,14 @@ class SearchViewModel extends ChangeNotifier {
   }
 
   void searchContent(String text) async {
-    popularContentParts = await searchService.getPopularContentParts();
-    changeLoading(); //TODO:
-    /* searchedText = text;
+    searchText = text; //TODO:performans için delay eklenebilir
     if (text.isEmpty) {
       notifyListeners();
       return;
     }
     changeLoading();
     foundedContents = await searchService.searchContent(text);
-    changeLoading(); */
+    changeLoading();
   }
 
   void changeLoading() {

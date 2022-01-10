@@ -5,12 +5,14 @@ class CircleIconButton extends StatelessWidget {
   final IconData iconData;
   final String text;
   final VoidCallback onTap;
+  final Color? buttonColor;
 
   const CircleIconButton({
     Key? key,
     required this.iconData,
     required this.text,
     required this.onTap,
+    this.buttonColor,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,8 @@ class CircleIconButton extends StatelessWidget {
           children: [
             Icon(
               iconData,
-              size: 24.sp,
+              color: buttonColor ?? Colors.white,
+              size: 32.sp,
             ),
             SizedBox(height: 6.sp),
             Text(
