@@ -1,10 +1,8 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/app_constants.dart';
-import 'package:gain_clone/constants/color_constants.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
@@ -41,6 +39,13 @@ class ContentPage extends StatelessWidget {
         partList: contextPartList, //TODO:tek parta göre güncellenecek
         selectedContentIndex: partIndex,
       ),
+    );
+  }
+
+  void similarContentTapped(BuildContext context, Content content) {
+    NavigationService.pushWithModalBottomSheet(
+      context,
+      ContentPage(content: content),
     );
   }
 
@@ -123,9 +128,18 @@ class ContentPage extends StatelessWidget {
                 AppDivider(),
                 SizedBox(height: 12.sp),
                 if (!content.containsOnePart) ...[
-                  ContentPageTabbar(context: context, tabs: tabHeaders),
+                  ContentPageTabbar(
+                    context: context,
+                    tabs: tabHeaders,
+                    onPageChanged: context
+                        .read<ContentViewModel>()
+                        .updateSelectedPageIndex,
+                  ),
                   SizedBox(height: 24.sp),
-                  contentPartsField(context),
+                  if (context.watch<ContentViewModel>().selectedPageIndex == 0)
+                    contentPartsField(context)
+                  else
+                    similarContentsField(context),
                 ],
               ],
             ],
@@ -293,6 +307,36 @@ class ContentPage extends StatelessWidget {
           onTap: () => watchNowTapped(context, index),
           content: content,
           contentPart: contentPartList![index],
+        );
+      },
+    );
+  }
+
+  GridView similarContentsField(BuildContext context) {
+    final similarContentsList =
+        context.read<ContentViewModel>().simularContents;
+
+    return GridView.builder(
+      padding: EdgeInsets.only(bottom: context.bottomPadding + 36.sp),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 2,
+        mainAxisSpacing: 36.sp,
+        crossAxisSpacing: 36.sp,
+      ),
+      itemCount: similarContentsList?.length ?? 0,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () =>
+              similarContentTapped(context, similarContentsList![index]),
+          child: ClipRRect(
+            borderRadius: context.borderRadius12x,
+            child: NetworkImageWithShimmer(
+              similarContentsList![index].coverImageUrl,
+            ),
+          ),
         );
       },
     );

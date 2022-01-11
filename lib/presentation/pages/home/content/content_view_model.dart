@@ -8,10 +8,14 @@ class ContentViewModel extends ChangeNotifier {
 
   bool isLoadingParts = true;
   List<ContentPart>? contentPartList;
+  List<Content>? simularContents;
+
   final Content content;
   final GlobalKey scoreButtonKey = GlobalKey();
   bool isScoreState = false;
   bool? isLike;
+
+  int selectedPageIndex = 0;
 
   ContentViewModel(this.content) {
     initialize();
@@ -20,6 +24,8 @@ class ContentViewModel extends ChangeNotifier {
   Future<void> initialize() async {
     if (!content.containsOnePart) {
       contentPartList = await contentService.getContentParts(content.id);
+      simularContents =
+          await contentService.getSimularContents(content.contentType);
       if (contentPartList != null) {
         isLoadingParts = false;
         notifyListeners();
@@ -37,6 +43,11 @@ class ContentViewModel extends ChangeNotifier {
 
   void isLikeUpdated(bool? like) {
     isLike = like;
+    notifyListeners();
+  }
+
+  void updateSelectedPageIndex(int index) {
+    selectedPageIndex = index;
     notifyListeners();
   }
 }

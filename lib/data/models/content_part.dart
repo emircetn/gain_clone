@@ -1,16 +1,19 @@
 import 'dart:math';
 
+//TODO: json serializaible kullanılabilir
 class ContentPart {
   final int? part;
-  final String? name;
+  final String contentName;
+  final String? partName;
   final String coverUrl;
   final String videoUrl;
   final double videoAspectRatio;
   final String explanation;
 
   ContentPart({
-    this.name,
     required this.part,
+    required this.contentName,
+    this.partName,
     required this.coverUrl,
     required this.videoUrl,
     this.videoAspectRatio = 1.7,
@@ -24,17 +27,17 @@ class ContentPart {
 
   String get showPartNoAndName {
     if (part == null || part == 0) {
-      return ' - $name';
-    } else if (name == null) {
+      return ' - $partName';
+    } else if (partName == null) {
       return ' - $part. Bölüm';
     } else {
-      return '- $part. Bölüm - $name ';
+      return '- $part. Bölüm - $partName ';
     }
   }
 
   String get showPartNoAndNameForCover {
     if (part == null || part == 0) {
-      return '$name';
+      return '$partName';
     } else {
       return 'Bölüm $part';
     }
@@ -42,7 +45,7 @@ class ContentPart {
 
   String get showPartNoAndNameForPlayer {
     if (part == null || part == 0) {
-      return '$name';
+      return '$partName';
     } else {
       return '$part. Bölüm';
     }
@@ -51,7 +54,8 @@ class ContentPart {
   factory ContentPart.fromMap(Map<String, dynamic> map) {
     return ContentPart(
       part: map['part']?.toInt() ?? 0,
-      name: map['name'],
+      contentName: map['name'],
+      partName: map['partName'],
       coverUrl: map['coverUrl'] ?? '',
       videoUrl: map['videoUrl'] ?? partList[Random().nextInt(partList.length)],
       videoAspectRatio: map['videoAspectRatio']?.toDouble() ?? 1.7,

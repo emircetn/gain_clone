@@ -25,7 +25,6 @@ class SearchService {
           "orderBy": '"name"',
           "startAt": '"$text"',
           "endAt": '"$text\uf8ff"',
-          "print": '"pretty"',
         },
       );
 
@@ -53,7 +52,6 @@ class SearchService {
         queryParameters: {
           "orderBy": '"watchedCount"',
           "limitToLast": 1,
-          "print": '"pretty"',
         },
       );
 

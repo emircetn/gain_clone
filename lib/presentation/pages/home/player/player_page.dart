@@ -232,7 +232,7 @@ class PlayerPage extends StatelessWidget {
             : CrossAxisAlignment.start,
         children: [
           Text(
-            '${args.content.name}${contentPart.showPartNoAndName}',
+            '${contentPart.contentName}${contentPart.showPartNoAndName}',
             style: context.textTheme.headline5!.copyWith(
               color: Colors.white,
             ),
