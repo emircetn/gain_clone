@@ -5,6 +5,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/app_constants.dart';
 import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
 import 'package:gain_clone/data/models/content.dart';
+import 'package:gain_clone/data/models/content_part.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 
@@ -31,15 +32,36 @@ class ContentPage extends StatelessWidget {
   }) : super(key: key);
 
   void watchNowTapped(BuildContext context, [int partIndex = 0]) {
-    final contextPartList = context.read<ContentViewModel>().contentPartList!;
-    NavigationService.pushNamed(
-      PlayerPage.path,
-      arguments: PlayerPageArguments(
-        content: content,
-        partList: contextPartList, //TODO:tek parta göre güncellenecek
-        selectedContentIndex: partIndex,
-      ),
-    );
+    if (content.containsOnePart) {
+      NavigationService.pushNamed(
+        PlayerPage.path,
+        arguments: PlayerPageArguments(
+          content: content,
+          partList: [
+            ContentPart(
+              part: 0,
+              contentName: content.name,
+              partName: '',
+              coverUrl: content.coverImageUrl,
+              videoUrl: content.videoUrl!,
+              explanation: content.explanation,
+            )
+          ] //TODO:doğru kullanım bu değil. ileride güncellenebilir
+          ,
+          selectedContentIndex: partIndex,
+        ),
+      );
+    } else {
+      final contextPartList = context.read<ContentViewModel>().contentPartList!;
+      NavigationService.pushNamed(
+        PlayerPage.path,
+        arguments: PlayerPageArguments(
+          content: content,
+          partList: contextPartList, //TODO:tek parta göre güncellenecek
+          selectedContentIndex: partIndex,
+        ),
+      );
+    }
   }
 
   void similarContentTapped(BuildContext context, Content content) {

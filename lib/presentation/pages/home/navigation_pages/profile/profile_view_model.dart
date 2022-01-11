@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/user.dart';
 import 'package:gain_clone/managers/user_manager.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/profile/profile_service.dart';
 import 'package:gain_clone/utils/app_functions.dart';

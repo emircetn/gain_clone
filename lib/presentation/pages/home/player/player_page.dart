@@ -7,7 +7,6 @@ import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/presentation/components/buttons/player_icon_button.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
-import 'package:gain_clone/presentation/components/other/seconds_display_widget.dart';
 import 'package:gain_clone/presentation/components/sliders/player_slider.dart';
 import 'package:gain_clone/presentation/pages/home/player/player_view_model.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +22,6 @@ class PlayerPage extends StatelessWidget {
 
   void closeTapped(BuildContext context) async {
     await context.read<PlayerViewModel>().setDefaultOrientation();
-
     NavigationService.pop();
   }
 
@@ -74,6 +72,7 @@ class PlayerPage extends StatelessWidget {
     );
   }
 
+  //TODO:widget yazılcak
   Row tapField(BuildContext context) {
     final playerViewModel = context.read<PlayerViewModel>();
     return Row(
@@ -86,15 +85,6 @@ class PlayerPage extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onDoubleTap: () => playerViewModel.seekToForwardTapped(),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: SecondsDisplayWidget(
-                //TODO:widget yazılcak
-                seconds: playerViewModel.defaultSeconds.inSeconds,
-                isForward: true,
-                isVisible: true,
-              ),
-            ),
           ),
         )
       ],
@@ -232,7 +222,9 @@ class PlayerPage extends StatelessWidget {
             : CrossAxisAlignment.start,
         children: [
           Text(
-            '${contentPart.contentName}${contentPart.showPartNoAndName}',
+            contentPart.showPartNoAndNameForPlayer.isNotEmpty
+                ? ('${contentPart.contentName}${contentPart.showPartNoAndName}')
+                : contentPart.contentName,
             style: context.textTheme.headline5!.copyWith(
               color: Colors.white,
             ),
@@ -243,7 +235,9 @@ class PlayerPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '${args.content.showContentType}  •  ${contentPart.showPartNoAndNameForPlayer}',
+                contentPart.showPartNoAndNameForPlayer.isNotEmpty
+                    ? ('${args.content.showContentType}  •  ${contentPart.showPartNoAndNameForPlayer}')
+                    : args.content.showContentType,
                 style: context.textTheme.subtitle2!.copyWith(
                   color: Colors.white54,
                 ),

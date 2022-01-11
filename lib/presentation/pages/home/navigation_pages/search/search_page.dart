@@ -91,7 +91,6 @@ class SearchPage extends StatelessWidget {
           itemCount: popularContentParts.length,
           itemBuilder: (_, index) {
             return ContentPartMiniItem(
-              content: Content.temp(), //TODO:eklenecek,
               contentPart: popularContentParts[index],
               onTap: () => pushPlayerPage(
                 contentPart: popularContentParts[index],
