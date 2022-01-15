@@ -16,10 +16,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => const App(), // Wrap your app
-    ),
+    DevicePreview(enabled: false, builder: (_) => const App()),
   );
 }
 
@@ -40,6 +37,10 @@ class App extends StatelessWidget {
         ),
       ],
       child: ScreenUtilInit(
+        designSize: const Size(
+          390,
+          844,
+        ), // tasarım dosyası olmadığı için boyutlar bu ekrandaki boyutlara göre oranlandı
         builder: () {
           return MaterialApp(
             title: 'GAİN Clone',

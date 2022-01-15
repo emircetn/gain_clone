@@ -26,34 +26,34 @@ class ContentPartItem extends StatelessWidget {
         onTap: onTap,
         contentPadding: EdgeInsets.zero,
         leading: SizedBox(
-          height: context.width * 0.25,
-          width: context.width * 0.3,
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: context.borderRadius8x,
-                child: NetworkImageWithShimmer(
-                  contentPart.coverUrl,
-                  height: context.width * 0.25,
-                  width: context.width * 0.3,
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900]!,
-                    borderRadius: context.borderRadiusOnlyBottom8x,
-                  ),
-                  width: context.width * 0.3,
-                  child: Text(
-                    contentPart.showPartNoAndNameForCover,
-                    style: context.textTheme.caption,
-                    textAlign: TextAlign.center,
+          child: AspectRatio(
+            aspectRatio: 2,
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: context.borderRadius8x,
+                  child: NetworkImageWithShimmer(
+                    contentPart.coverUrl,
+                    aspectRatio: 2,
                   ),
                 ),
-              )
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900]!,
+                      borderRadius: context.borderRadiusOnlyBottom8x,
+                    ),
+                    width: double.maxFinite,
+                    child: Text(
+                      contentPart.showPartNoAndNameForCover,
+                      style: context.textTheme.caption,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         title: Text(

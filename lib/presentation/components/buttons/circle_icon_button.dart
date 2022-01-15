@@ -27,7 +27,7 @@ class CircleIconButton extends StatelessWidget {
             Icon(
               iconData,
               color: buttonColor ?? Colors.white,
-              size: 32.sp,
+              size: 24.sp,
             ),
             SizedBox(height: 6.sp),
             Text(

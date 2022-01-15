@@ -39,7 +39,7 @@ class MainPage extends StatelessWidget {
                   const AppLinearProgressIndicator()
                 else
                   _contentBucketListField(context),
-                SizedBox(height: context.bottomPadding + 96.h)
+                SizedBox(height: context.bottomPadding + 96.sp)
               ],
             ),
           ),

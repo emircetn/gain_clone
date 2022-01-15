@@ -162,7 +162,10 @@ class PlayerPage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 12.sp),
+                              if (!context.isTablet)
+                                SizedBox(height: 12.sp)
+                              else
+                                SizedBox(height: 24.sp)
                             ],
                           ),
                         ),

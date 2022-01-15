@@ -115,9 +115,7 @@ extension PaddingExtensionVertical on BuildContext {
 }
 
 extension SizeExtension on num {
-  double get w => ScreenUtil().setWidth(this);
-  double get h => ScreenUtil().setHeight(this);
-  double get sp => toDouble();
+  double get sp => ScreenUtil().setSp(this);
 }
 
 extension ThemeExtension on BuildContext {
@@ -127,4 +125,8 @@ extension ThemeExtension on BuildContext {
   double get width => MediaQuery.of(this).size.width;
   double get bottomPadding => MediaQuery.of(this).padding.bottom;
   bool get isPortait => MediaQuery.of(this).orientation == Orientation.portrait;
+  bool get isTablet =>
+      ((isPortait && width < 600) || (!isPortait && height < 600))
+          ? false
+          : true;
 }

@@ -179,6 +179,7 @@ class ContentPage extends StatelessWidget {
           NetworkImageWithShimmer(
             content.coverImageUrl,
             height: context.height * .28,
+            width: double.maxFinite,
           ),
           Container(
             decoration: BoxDecoration(

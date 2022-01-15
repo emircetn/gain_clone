@@ -105,7 +105,7 @@ class ProfilePage extends StatelessWidget {
                   ..._notificationSettingsField(context),
                   SizedBox(height: 24.sp),
                   ..._generalSettingsField(context),
-                  SizedBox(height: 96.h)
+                  SizedBox(height: 96.sp)
                 ],
               ),
             ),

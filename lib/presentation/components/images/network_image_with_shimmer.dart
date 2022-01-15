@@ -6,16 +6,27 @@ class NetworkImageWithShimmer extends StatelessWidget {
   final String imageUrl;
   final double? height;
   final double? width;
+  final double? aspectRatio;
 
   const NetworkImageWithShimmer(
     this.imageUrl, {
     Key? key,
     this.height,
     this.width,
+    this.aspectRatio,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return aspectRatio != null
+        ? AspectRatio(
+            aspectRatio: aspectRatio!,
+            child: body(),
+          )
+        : body();
+  }
+
+  CachedNetworkImage body() {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       fit: BoxFit.cover,
