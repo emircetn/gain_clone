@@ -1,11 +1,16 @@
-import 'dart:math';
+import 'package:json_annotation/json_annotation.dart';
+part 'content_part.g.dart';
 
-//TODO: json serializaible kullanılabilir
+@JsonSerializable(createToJson: false)
 class ContentPart {
   final int? part;
+  @JsonKey(name: 'name')
   final String contentName;
   final String? partName;
   final String coverUrl;
+  @JsonKey(
+      defaultValue:
+          'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
   final String videoUrl;
   final double videoAspectRatio;
   final String explanation;
@@ -19,11 +24,6 @@ class ContentPart {
     this.videoAspectRatio = 1.7,
     required this.explanation,
   });
-
-  static List<String> get partList => const [
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-      ];
 
   String get showPartNoAndName {
     if (part == null || part == 0) {
@@ -51,15 +51,6 @@ class ContentPart {
     }
   }
 
-  factory ContentPart.fromMap(Map<String, dynamic> map) {
-    return ContentPart(
-      part: map['part']?.toInt() ?? 0,
-      contentName: map['name'],
-      partName: map['partName'],
-      coverUrl: map['coverUrl'] ?? '',
-      videoUrl: map['videoUrl'] ?? partList[Random().nextInt(partList.length)],
-      videoAspectRatio: map['videoAspectRatio']?.toDouble() ?? 1.7,
-      explanation: map['explanation'] ?? '',
-    );
-  }
+  factory ContentPart.fromJson(Map<String, dynamic> json) =>
+      _$ContentPartFromJson(json);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_header.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_header/content_header.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/main/main_service.dart';
 
 class MainViewModel extends ChangeNotifier {

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
-import 'package:gain_clone/data/models/content.dart';
+import 'package:gain_clone/data/models/content/content.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';
 import 'package:gain_clone/presentation/components/items/big_recommended_content_item.dart';
 

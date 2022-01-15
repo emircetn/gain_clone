@@ -1,5 +1,5 @@
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 
 class PlayerPageArguments {
   final Content content;

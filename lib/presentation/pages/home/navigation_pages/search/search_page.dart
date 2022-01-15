@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/presentation/pages/home/player/player_page_arguments.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/presentation/components/indicators/app_linear_progress_indicator.dart';

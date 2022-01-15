@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 import 'package:gain_clone/managers/network_manager.dart';
 
 class SearchService {
@@ -32,7 +32,7 @@ class SearchService {
           final contentList = <Content>[];
           Map<String, dynamic> map = Map<String, dynamic>.from(response.data);
           map.forEach((key, value) {
-            contentList.add(Content.fromMap(value as Map<String, dynamic>));
+            contentList.add(Content.fromJson(value as Map<String, dynamic>));
           });
           return contentList;
         }
@@ -61,7 +61,7 @@ class SearchService {
 
           for (var oneMap in map['2']) {
             contentPartList
-                .add(ContentPart.fromMap(oneMap as Map<String, dynamic>));
+                .add(ContentPart.fromJson(oneMap as Map<String, dynamic>));
           }
 
           return contentPartList;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/presentation/pages/home/player/player_page_arguments.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerViewModel extends ChangeNotifier {

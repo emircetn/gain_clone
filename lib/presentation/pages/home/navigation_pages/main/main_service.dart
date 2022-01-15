@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_header.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_header/content_header.dart';
 import 'package:gain_clone/managers/network_manager.dart';
 
 class MainService {
@@ -47,7 +47,7 @@ class MainService {
 
       if (response.statusCode == HttpStatus.ok) {
         final contentHeader =
-            ContentHeader.fromMap(response.data as Map<String, dynamic>);
+            ContentHeader.fromJson(response.data as Map<String, dynamic>);
 
         for (int index = 0;
             index < contentHeader.contentBucketList.length;
@@ -77,7 +77,7 @@ class MainService {
           .get('${ServicePath.contents.rawValue}/$id'.toJson);
 
       if (response.statusCode == HttpStatus.ok) {
-        return Content.fromMap(response.data);
+        return Content.fromJson(response.data);
       }
     } catch (e) {
       debugPrint('getContent error: ' + e.toString());

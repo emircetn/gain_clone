@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Scaffold;
-import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
-import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
-import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/player/player_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/webview/web_view_page_arguments.dart';
 import 'package:gain_clone/presentation/pages/home/navigation/navigation_page.dart';
 import 'package:gain_clone/presentation/pages/home/player/player_page.dart';
 import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page.dart';

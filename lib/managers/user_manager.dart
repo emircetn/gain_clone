@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/user.dart';
+import 'package:gain_clone/data/models/user/user.dart';
 
 class UserManager extends ChangeNotifier {
   User? _user = User.temp();

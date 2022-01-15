@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
-import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
-import 'package:gain_clone/data/models/arguments/web_view_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/webview/web_view_page_arguments.dart';
 import 'package:gain_clone/managers/app_manager.dart';
 import 'package:gain_clone/managers/user_manager.dart';
 import 'package:gain_clone/presentation/components/alertS/app_alert.dart';

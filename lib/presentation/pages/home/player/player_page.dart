@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:gain_clone/constants/app_constants.dart';
-import 'package:gain_clone/data/models/arguments/player_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/player/player_page_arguments.dart';
 import 'package:gain_clone/init/navigation/navigation_service.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/presentation/components/buttons/player_icon_button.dart';

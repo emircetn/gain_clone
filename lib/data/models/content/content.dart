@@ -1,21 +1,31 @@
-import 'dart:math';
-
 import 'package:gain_clone/init/enums/content_type.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'content.g.dart';
 
 enum ContentTypes {
+  @JsonValue(0)
   series,
+  @JsonValue(1)
   movie,
+  @JsonValue(2)
   program,
+  @JsonValue(3)
   documentary,
 }
 
+@JsonSerializable(createToJson: false)
 class Content {
   final int id;
   final String name;
   final String explanation;
   final ContentTypes contentType;
   final String coverImageUrl;
+  @JsonKey(
+      defaultValue:
+          'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
   final String? videoUrl;
+  @JsonKey(defaultValue: 1)
   final int partCount;
   final double? imdbScore;
 
@@ -39,11 +49,6 @@ class Content {
 
   bool get containsOnePart => partCount == 1;
 
-  static List<String> get movieList => const [
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-      ];
-
   String get showContentType {
     switch (contentType) {
       case ContentTypes.series:
@@ -57,19 +62,8 @@ class Content {
     }
   }
 
-  factory Content.fromMap(Map<String, dynamic> map) {
-    return Content(
-      id: map['id'] ?? 0,
-      name: map['name'] ?? '',
-      explanation: map['explanation'] ?? '',
-      contentType: ContentTypes.values[map['contentType'] ?? 0],
-      coverImageUrl: map['coverImageUrl'] ?? '',
-      imdbScore: map['imdbScore']?.toDouble(),
-      videoUrl: movieList[Random().nextInt(movieList
-          .length)], //Sadece tek part olanlar için atanması gerekiyor. videoUrl'i dbye eklemedim o yüzden kontrol de yapmadan hepsine atıyorum. dbye eklenince güncellenmeli
-      partCount: map['partCount'] ?? 1,
-    );
-  }
+  factory Content.fromJson(Map<String, dynamic> json) =>
+      _$ContentFromJson(json);
 
   factory Content.temp() {
     return Content(

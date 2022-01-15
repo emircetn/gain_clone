@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 import 'package:gain_clone/presentation/pages/home/navigation_pages/search/search_service.dart';
 
 class SearchViewModel extends ChangeNotifier {

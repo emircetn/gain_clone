@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/arguments/user_information_update_page_arguments.dart';
+import 'package:gain_clone/presentation/pages/home/user_information_update/user_information_update_page_arguments.dart';
 import 'package:gain_clone/utils/app_functions.dart';
 
 class UserInformationUpdateViewModel extends ChangeNotifier {

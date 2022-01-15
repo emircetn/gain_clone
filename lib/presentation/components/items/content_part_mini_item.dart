@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 import 'package:gain_clone/extensions/app_extensions.dart';
 import 'package:gain_clone/presentation/components/images/network_image_with_shimmer.dart';
 

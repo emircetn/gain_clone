@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gain_clone/data/models/content.dart';
-import 'package:gain_clone/data/models/content_part.dart';
+import 'package:gain_clone/data/models/content/content.dart';
+import 'package:gain_clone/data/models/content_part/content_part.dart';
 import 'package:gain_clone/managers/network_manager.dart';
 
 class ContentService {
@@ -21,7 +21,7 @@ class ContentService {
 
       if (response.statusCode == HttpStatus.ok) {
         final contentPartList = response.data
-            .map((e) => ContentPart.fromMap(e as Map<String, dynamic>))
+            .map((e) => ContentPart.fromJson(e as Map<String, dynamic>))
             .toList()
             .cast<ContentPart>();
         return contentPartList;
@@ -44,7 +44,7 @@ class ContentService {
           final contentList = <Content>[];
           for (var oneContent in response.data) {
             contentList
-                .add(Content.fromMap(oneContent as Map<String, dynamic>));
+                .add(Content.fromJson(oneContent as Map<String, dynamic>));
           }
           return contentList;
         }
