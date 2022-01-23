@@ -37,10 +37,8 @@ class App extends StatelessWidget {
         ),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(
-          390,
-          844,
-        ), // tasarım dosyası olmadığı için boyutlar bu ekrandaki boyutlara göre oranlandı
+        designSize: const Size(390,
+            844), // tasarım dosyası olmadığı için boyutlar bu ekrandaki boyutlara göre oranlandı
         builder: () {
           return MaterialApp(
             title: 'GAİN Clone',
